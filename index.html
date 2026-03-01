@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Rent · zenzy</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #eff6ff;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --accent-light: #ecfdf5;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 32px;
+            --shadow-sm: 0 2px 4px -1px rgb(0 0 0 / 0.05);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+            --shadow-card: 0 4px 20px -5px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* ----- Animations ----- */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -468px 0; }
+            100% { background-position: 468px 0; }
+        }
+
+        /* ----- Header ----- */
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            transition: color 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--background);
+        }
+
+        .back-btn:hover { color: var(--secondary); background: #e2e8f0; }
+
+        .page-title-header {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .user-actions { display: flex; gap: 0.8rem; align-items: center; }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--secondary);
+        }
+
+        .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
+
+        /* ----- Main Layout & Search ----- */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+
+        .search-filter-section {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            animation: fadeSlideUp 0.6s ease-out;
+        }
+
+        .search-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .search-wrapper { flex: 2; min-width: 250px; position: relative; }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--background);
+            border-radius: var(--radius-md);
+            padding: 0.7rem 1.2rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-bar i { color: var(--primary); margin-right: 12px; font-size: 1.1rem; }
+        .search-bar input { flex-grow: 1; border: none; background: transparent; outline: none; font-size: 0.95rem; color: var(--secondary); }
+
+        .location-btn {
+            background: var(--primary-light);
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .location-btn:hover { background: var(--primary); color: white; }
+        .location-btn i { font-size: 1rem; }
+
+        /* Suggestions Box */
+        .suggestions-box {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 1100;
+            box-shadow: var(--shadow-card);
+            display: none;
+            padding: 0.5rem 0;
+            animation: fadeSlideUp 0.2s ease-out;
+        }
+        
+        .suggestions-box div {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+        
+        .suggestions-box div:hover { background: var(--primary-light); color: var(--primary-dark); }
+        .suggestions-box div i { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* Filters */
+        .filter-scroll {
+            display: flex;
+            gap: 0.8rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+        
+        .filter-scroll::-webkit-scrollbar { display: none; }
+
+        .filter-chip {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .filter-chip:hover:not(.active) { background: #e2e8f0; color: var(--secondary); }
+
+        /* ----- Results Meta & Sort ----- */
+        .results-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .sort-dropdown {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            background: white;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.2s;
+        }
+        
+        .sort-dropdown:hover { border-color: var(--primary); }
+
+        .sort-options {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 5px);
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-card);
+            display: none;
+            flex-direction: column;
+            width: 200px;
+            z-index: 100;
+            overflow: hidden;
+            animation: fadeSlideUp 0.2s ease-out;
+        }
+        
+        .sort-options span {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        
+        .sort-options span:last-child { border-bottom: none; }
+        .sort-options span:hover { background: var(--primary-light); color: var(--primary-dark); }
+        .sort-dropdown.active .sort-options { display: flex; }
+
+        /* ----- Property List/Grid ----- */
+        .property-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+
+        .property-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            display: flex;
+            flex-direction: row; 
+            gap: 1.2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            opacity: 0;
+            animation: fadeSlideUp 0.5s forwards;
+        }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card);
+            border-color: #cbd5e1;
+        }
+
+        .prop-image-box {
+            position: relative;
+            width: 135px;
+            flex-shrink: 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+
+        .prop-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .property-card:hover .prop-image { transform: scale(1.05); }
+
+        .prop-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .prop-badge.verified { background: var(--accent); }
+
+        .prop-photos-count {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 2;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .prop-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0; 
+        }
+
+        .prop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; }
+
+        .prop-price { font-size: 1.35rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.02em; }
+        .prop-price span { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
+
+        .fav-btn {
+            color: #cbd5e1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .fav-btn:hover { color: #f87171; border-color: #fca5a5; transform: scale(1.1); }
+        .fav-btn.active { color: #ef4444; border-color: #f87171; background: #fef2f2; }
+
+        .prop-title { font-size: 1.05rem; font-weight: 700; color: var(--secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.4rem; }
+        .prop-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; }
+
+        .prop-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .spec-item { display: flex; align-items: center; gap: 6px; }
+        .spec-item i { color: var(--primary); opacity: 0.8; }
+
+        /* Enhanced CTA */
+        .view-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            text-align: center;
+            padding: 0.85rem;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: auto; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.4s ease;
+        }
+
+        .view-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .view-btn:hover::before { left: 150%; }
+
+        /* ----- Skeleton Loader Styles ----- */
+        .skeleton {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 800px 100%; 
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards; 
+            animation-iteration-count: infinite;
+            animation-name: shimmer;
+            animation-timing-function: linear;
+            border-radius: 4px;
+        }
+
+        .skeleton-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 1rem;
+            display: flex;
+            gap: 1.2rem;
+            border: 1px solid var(--border);
+        }
+
+        .skeleton-img { width: 135px; height: 180px; border-radius: var(--radius-lg); flex-shrink: 0; }
+        .skeleton-details { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
+        .skeleton-price { height: 28px; width: 40%; margin-bottom: 5px; }
+        .skeleton-title { height: 20px; width: 80%; }
+        .skeleton-loc { height: 16px; width: 60%; margin-bottom: 10px; }
+        .skeleton-specs { height: 16px; width: 90%; margin-bottom: auto; }
+        .skeleton-btn { height: 45px; width: 100%; border-radius: var(--radius-md); margin-top: 15px; }
+
+        /* ----- Desktop Adjustments ----- */
+        @media (min-width: 768px) {
+            .search-filter-section { flex-direction: row; align-items: center; }
+            .search-row { flex-grow: 1; }
+            .filter-scroll { max-width: 60%; padding-bottom: 0; }
+            .property-grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.8rem; }
+            .property-card { flex-direction: column; padding: 1.2rem; }
+            .prop-image-box { width: 100%; height: 240px; border-radius: var(--radius-md); }
+            .skeleton-card { flex-direction: column; }
+            .skeleton-img { width: 100%; height: 240px; }
+        }
+
+        /* ----- Bottom Nav ----- */
+        .bottom-nav { display: none; }
+        @media (max-width: 767px) {
+            .bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0; left: 0; width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid var(--border);
+                justify-content: space-around;
+                padding: 0.6rem 0;
+                z-index: 1000;
+                padding-bottom: env(safe-area-inset-bottom, 0.6rem);
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: 0.65rem;
+                font-weight: 600;
+                position: relative;
+                transition: all 0.3s;
+            }
+
+            .nav-item i { font-size: 1.3rem; transition: transform 0.3s; }
+            
+            .nav-item.active { color: var(--primary); }
+            .nav-item.active i { transform: translateY(-4px); }
+            
+            .nav-item.active::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                width: 4px;
+                height: 4px;
+                background: var(--primary);
+                border-radius: 50%;
+            }
+
+            body { padding-bottom: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="brand-wrapper">
+                <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <span class="page-title-header"><i class="fas fa-home" style="color:var(--primary)"></i> Zenzy Rent</span>
+            </div>
+            
+            <div class="user-actions">
+                <span class="icon-btn" title="Map View"><i class="far fa-map"></i></span>
+                <span class="icon-btn filter-toggle-btn" style="background: var(--primary-light); color: var(--primary); border:none;"><i class="fas fa-sliders-h"></i></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        
+        <!-- Advanced Search & Filters -->
+        <section class="search-filter-section">
+            <div class="search-row">
+                <div class="search-wrapper">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by 'Sector', '2 BHK', or Landmark..." autocomplete="off">
+                    </div>
+                    <div id="suggestions" class="suggestions-box"></div>
+                </div>
+                <button class="location-btn" id="locationBtn">
+                    <i class="fas fa-location-crosshairs"></i> <span>Locate Me</span>
+                </button>
+            </div>
+            <div class="filter-scroll" id="filterScroll">
+                <div class="filter-chip active" data-filter="all">All Properties</div>
+                <div class="filter-chip" data-filter="brokerage"><i class="fas fa-bolt" style="color:#f59e0b"></i> Brokerage Free</div>
+                <div class="filter-chip" data-filter="1bhk">1 BHK</div>
+                <div class="filter-chip" data-filter="2bhk">2 BHK</div>
+                <div class="filter-chip" data-filter="3bhk">3+ BHK</div>
+                <div class="filter-chip" data-filter="furnished">Fully Furnished</div>
+                <div class="filter-chip" data-filter="price15k">Under ₹15k</div>
+                <div class="filter-chip" data-filter="verified"><i class="fas fa-shield-halved" style="color:var(--accent)"></i> Zenzy Verified</div>
+            </div>
+        </section>
+
+        <!-- Results Meta -->
+        <div class="results-meta">
+            <span id="resultCount">Finding best homes...</span>
+            <div class="sort-dropdown" id="sortDropdown">
+                <span style="display:flex; align-items:center; gap:8px;"><i class="fas fa-sort-amount-down"></i> <span id="sortText">Relevancy</span></span>
+                <div class="sort-options">
+                    <span data-sort="relevancy"><i class="fas fa-star" style="color:var(--text-muted); margin-right:8px;"></i> Relevancy</span>
+                    <span data-sort="priceLow"><i class="fas fa-arrow-up-short-wide" style="color:var(--text-muted); margin-right:8px;"></i> Price: Low to High</span>
+                    <span data-sort="priceHigh"><i class="fas fa-arrow-down-wide-short" style="color:var(--text-muted); margin-right:8px;"></i> Price: High to Low</span>
+                    <span data-sort="newest"><i class="fas fa-clock" style="color:var(--text-muted); margin-right:8px;"></i> Newest First</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Grid (Dynamically Populated) -->
+        <div class="property-grid" id="propertyGrid">
+            <!-- Initial state will be replaced by skeletons then data -->
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item">
+            <i class="fas fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="fas fa-building"></i>
+            <span>Rent</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="far fa-heart"></i>
+            <span>Saved</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="far fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script>
+        (function() {
+            // ---------- MOCK DATASET ----------
+            const properties = [
+                { id:1, title:"2 BHK Independent Floor", price:18500, bhk:2, location:"Block 4, Near Metro Station", sector:"Zone 4", beds:2, baths:2, sqft:950, furnishing:"Semi-Furnished", parking:true, verified:true, brokerage:false, tags:["metro", "independent"], img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", photos:8 },
+                { id:2, title:"1 BHK Studio Apartment", price:12000, bhk:1, location:"Block 2, Residency Greens", sector:"Zone 2", beds:1, baths:1, sqft:450, furnishing:"Semi-Furnished", parking:false, verified:false, brokerage:true, tags:["brokerage free","studio"], img:"https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80", photos:5 },
+                { id:3, title:"3 BHK Luxury Villa", price:45000, bhk:3, location:"Zone A, Protocol Estates", sector:"Zone 1", beds:3, baths:3, sqft:2100, furnishing:"Fully Furnished", parking:true, verified:false, brokerage:false, tags:["premium","villa"], img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", photos:14 },
+                { id:4, title:"Single Room / PG Setup", price:8500, bhk:1, location:"Block 5, Market Area", sector:"Zone 3", beds:1, baths:1, sqft:null, furnishing:"Basic", parking:false, verified:true, brokerage:false, tags:["pg","wifi", "room"], img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80", photos:3 },
+                { id:5, title:"2 BHK Premium Lake View", price:24000, bhk:2, location:"Block 7, Lake Vista", sector:"Zone 2", beds:2, baths:2, sqft:1120, furnishing:"Fully Furnished", parking:true, verified:true, brokerage:false, tags:["furnished","lake", "premium"], img:"https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80", photos:10 },
+                { id:6, title:"1 BHK + Study (Brokerage Free)", price:16500, bhk:1, location:"Block 9, Downtown", sector:"Zone 4", beds:1, baths:1, sqft:680, furnishing:"Semi-Furnished", parking:true, verified:true, brokerage:true, tags:["metro","study", "brokerage free"], img:"https://images.unsplash.com/photo-1505873242700-f2899d99cfac?auto=format&fit=crop&w=600&q=80", photos:6 }
+            ];
+
+            // ---------- STATE ----------
+            let currentFilter = 'all';
+            let currentSort = 'relevancy';
+            let searchTerm = '';
+            let userLocation = '';
+
+            const grid = document.getElementById('propertyGrid');
+            const searchInput = document.getElementById('searchInput');
+            const suggestionsBox = document.getElementById('suggestions');
+            const filterChips = document.querySelectorAll('.filter-chip');
+            const sortDropdown = document.getElementById('sortDropdown');
+            const sortOptions = document.querySelectorAll('.sort-options span');
+            const sortText = document.getElementById('sortText');
+            const locationBtn = document.getElementById('locationBtn');
+            const resultSpan = document.getElementById('resultCount');
+
+            // ---------- RENDER SKELETONS ----------
+            function renderSkeletons() {
+                let skeletonHTML = '';
+                for(let i=0; i<4; i++) {
+                    skeletonHTML += `
+                        <div class="skeleton-card">
+                            <div class="skeleton skeleton-img"></div>
+                            <div class="skeleton-details">
+                                <div class="skeleton skeleton-price"></div>
+                                <div class="skeleton skeleton-title"></div>
+                                <div class="skeleton skeleton-loc"></div>
+                                <div class="skeleton skeleton-specs"></div>
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                grid.innerHTML = skeletonHTML;
+                resultSpan.innerText = "Finding best homes...";
+            }
+
+            // ---------- LOGIC ----------
+            function filterProperties() {
+                let filtered = properties.filter(p => {
+                    if (currentFilter !== 'all') {
+                        if (currentFilter === 'brokerage' && !p.brokerage) return false;
+                        if (currentFilter === '1bhk' && p.bhk !== 1) return false;
+                        if (currentFilter === '2bhk' && p.bhk !== 2) return false;
+                        if (currentFilter === '3bhk' && p.bhk < 3) return false;
+                        if (currentFilter === 'furnished' && p.furnishing !== 'Fully Furnished') return false;
+                        if (currentFilter === 'price15k' && p.price >= 15000) return false;
+                        if (currentFilter === 'verified' && !p.verified) return false;
+                    }
+                    if (searchTerm.trim() !== '') {
+                        const term = searchTerm.toLowerCase();
+                        const inTitle = p.title.toLowerCase().includes(term);
+                        const inLoc = p.location.toLowerCase().includes(term);
+                        const tagMatch = p.tags.some(t => t.toLowerCase().includes(term));
+                        if (!(inTitle || inLoc || tagMatch)) return false;
+                    }
+                    return true;
+                });
+
+                if (currentSort === 'priceLow') filtered.sort((a,b) => a.price - b.price);
+                else if (currentSort === 'priceHigh') filtered.sort((a,b) => b.price - a.price);
+                else if (currentSort === 'newest') filtered.sort((a,b) => b.id - a.id);
+                else filtered.sort((a,b) => a.id - b.id); 
+
+                return filtered;
+            }
+
+            // ---------- RENDER DATA ----------
+            function render() {
+                const filtered = filterProperties();
+                
+                // Set Meta Text
+                let locText = userLocation ? ` near <strong>${userLocation}</strong>` : ` in <strong>your area</strong>`;
+                resultSpan.innerHTML = `Showing ${filtered.length} properties${locText}`;
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `
+                        <div style="grid-column:1/-1; text-align:center; padding:4rem 2rem; background:white; border-radius:var(--radius-xl); border: 1px dashed var(--border);">
+                            <i class="fas fa-house-circle-xmark" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                            <h3 style="color:var(--secondary); margin-bottom: 0.5rem;">No properties found</h3>
+                            <p style="color:var(--text-muted); font-size: 0.9rem;">Try adjusting your search or clearing filters to see more results.</p>
+                        </div>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach((p, index) => {
+                    // Staggered animation delay
+                    const delay = index * 0.1;
+                    
+                    const isFav = localStorage.getItem(`fav_${p.id}`) === 'true';
+                    const favIcon = isFav ? 'fas' : 'far';
+                    
+                    let badgeHTML = '';
+                    if (p.verified) {
+                        badgeHTML = '<span class="prop-badge verified"><i class="fas fa-check-circle"></i> Zenzy Verified</span>';
+                    } else if (p.brokerage) {
+                        badgeHTML = '<span class="prop-badge" style="background:var(--accent);">Brokerage Free</span>';
+                    } else if (p.price > 30000) {
+                        badgeHTML = '<span class="prop-badge" style="background:var(--secondary);">Premium</span>';
+                    }
+
+                    const sqftHTML = p.sqft ? `<span class="spec-item"><i class="fas fa-vector-square"></i> ${p.sqft} sqft</span>` : '';
+
+                    html += `
+                    <article class="property-card" data-id="${p.id}" style="animation-delay: ${delay}s;">
+                        <div class="prop-image-box">
+                            <img src="${p.img}" alt="${p.title}" class="prop-image">
+                            ${badgeHTML}
+                            <span class="prop-photos-count"><i class="far fa-image"></i> ${p.photos}</span>
+                        </div>
+                        <div class="prop-details">
+                            <div>
+                                <div class="prop-header">
+                                    <div class="prop-price">₹${p.price.toLocaleString()} <span>/mo</span></div>
+                                    <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${p.id}" aria-label="Save">
+                                        <i class="${favIcon} fa-heart"></i>
+                                    </button>
+                                </div>
+                                <h3 class="prop-title">${p.title}</h3>
+                                <div class="prop-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
+                                <div class="prop-specs">
+                                    <span class="spec-item"><i class="fas fa-bed"></i> ${p.beds} Bed</span>
+                                    <span class="spec-item"><i class="fas fa-bath"></i> ${p.baths} Bath</span>
+                                    ${sqftHTML}
+                                    <span class="spec-item"><i class="fas fa-couch"></i> ${p.furnishing}</span>
+                                </div>
+                            </div>
+                            <a href="#" class="view-btn">View Property</a>
+                        </div>
+                    </article>`;
+                });
+                grid.innerHTML = html;
+
+                // Re-attach favorite listeners
+                document.querySelectorAll('.fav-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const id = this.dataset.id;
+                        const icon = this.querySelector('i');
+                        
+                        // Add a little pop animation
+                        this.style.transform = 'scale(0.8)';
+                        setTimeout(() => this.style.transform = '', 150);
+
+                        if (this.classList.contains('active')) {
+                            this.classList.remove('active');
+                            icon.classList.remove('fas'); icon.classList.add('far');
+                            localStorage.setItem(`fav_${id}`, 'false');
+                        } else {
+                            this.classList.add('active');
+                            icon.classList.remove('far'); icon.classList.add('fas');
+                            localStorage.setItem(`fav_${id}`, 'true');
+                        }
+                    });
+                });
+            }
+
+            // Wrapper to show skeletons then render data
+            function triggerRender() {
+                renderSkeletons();
+                // Simulate network latency for premium feel
+                setTimeout(render, 600);
+            }
+
+            // ---------- SEARCH & SUGGESTIONS ----------
+            function updateSuggestions() {
+                const term = searchInput.value.toLowerCase();
+                if (term.length < 2) { suggestionsBox.style.display = 'none'; return; }
+                
+                // Create mock suggestions based on keywords
+                const words = ["metro", "studio", "premium", "villa", "pg", "lake", "study", "market area", "downtown", "1 bhk", "2 bhk", "3 bhk"];
+                const unique = words.filter(w => w.includes(term));
+                
+                if (unique.length > 0) {
+                    suggestionsBox.innerHTML = unique.slice(0,5).map(s => `<div><i class="fas fa-magnifying-glass"></i> ${s}</div>`).join('');
+                    suggestionsBox.style.display = 'block';
+                } else {
+                    suggestionsBox.style.display = 'none';
+                }
+            }
+
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                updateSuggestions();
+                // Debounce real-time search slightly
+                clearTimeout(window.searchTimeout);
+                window.searchTimeout = setTimeout(triggerRender, 400);
+            });
+
+            suggestionsBox.addEventListener('click', (e) => {
+                if (e.target.closest('div')) {
+                    const text = e.target.closest('div').innerText.trim();
+                    searchInput.value = text;
+                    searchTerm = text;
+                    suggestionsBox.style.display = 'none';
+                    triggerRender();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target))
+                    suggestionsBox.style.display = 'none';
+                if (!sortDropdown.contains(e.target)) 
+                    sortDropdown.classList.remove('active');
+            });
+
+            // ---------- FILTERS ----------
+            filterChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    filterChips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter || 'all';
+                    triggerRender();
+                });
+            });
+
+            // ---------- SORT ----------
+            sortDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sortDropdown.classList.toggle('active');
+            });
+
+            sortOptions.forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const sortVal = e.target.dataset.sort;
+                    currentSort = sortVal;
+                    // Update Text but keep Relevancy logic generic for UI
+                    sortText.innerText = e.target.innerText.trim();
+                    sortDropdown.classList.remove('active');
+                    triggerRender();
+                });
+            });
+
+            // ---------- GEOLOCATION ----------
+            locationBtn.addEventListener('click', () => {
+                const icon = locationBtn.querySelector('i');
+                const text = locationBtn.querySelector('span');
+                
+                icon.className = 'fas fa-spinner fa-spin';
+                text.innerText = 'Locating...';
+                
+                // Simulate fetching location API
+                setTimeout(() => {
+                    userLocation = "Jaipur South"; // Simulated location
+                    icon.className = 'fas fa-location-dot';
+                    text.innerText = userLocation;
+                    locationBtn.style.background = 'var(--primary)';
+                    locationBtn.style.color = 'white';
+                    triggerRender();
+                }, 1500);
+            });
+
+            // Initialize app
+            triggerRender();
+
+        })();
+    </script>
+</body>
+</html>
