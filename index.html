@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenzy Rent · Smart Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zenzy Rent · Premium Real Estate</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="zz.png">
+
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
     <style>
         :root {
             --primary: #2563eb;
@@ -15,19 +21,19 @@
             --primary-light: #eff6ff;
             --secondary: #0f172a;
             --accent: #10b981;
-            --accent-light: #ecfdf5;
-            --background: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
+            --gold: #f59e0b;
+            --bg-main: #f4f7fb;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            --radius-md: 12px;
-            --radius-lg: 20px;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 24px;
             --radius-xl: 32px;
-            --shadow-sm: 0 2px 4px -1px rgb(0 0 0 / 0.05);
-            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08);
-            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
-            --shadow-floating: 0 20px 40px -10px rgba(15, 23, 42, 0.15);
+            --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 8px 30px rgba(15, 23, 42, 0.12);
+            --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.2);
         }
 
         * {
@@ -39,61 +45,40 @@
         }
 
         body {
-            background-color: var(--background);
+            background-color: var(--bg-main);
             color: var(--text-main);
             line-height: 1.5;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            padding-bottom: 90px; /* Space for bottom nav */
         }
 
-        /* ----- Advanced Animations ----- */
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(30px); }
+        /* ----- Animations ----- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes shimmer {
-            0% { background-position: -468px 0; }
-            100% { background-position: 468px 0; }
+            0% { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
         }
-
-        @keyframes heartPop {
+        @keyframes pop {
             0% { transform: scale(1); }
-            50% { transform: scale(1.4); }
+            50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        @keyframes pulseDot {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.4); background-color: var(--primary); }
+            100% { opacity: 0.6; transform: scale(1); }
         }
 
-        /* Ripple Effect Container */
-        .ripple-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-anim 600ms linear;
-            background-color: rgba(255, 255, 255, 0.4);
-            pointer-events: none;
-        }
-
-        @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        /* ----- Header ----- */
+        /* ----- Standardized Header (from Home Page) ----- */
         .header {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
             padding: 0.8rem 1.5rem;
             position: sticky;
             top: 0;
@@ -107,6 +92,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1rem;
         }
 
         .brand-wrapper {
@@ -116,37 +102,73 @@
             text-decoration: none;
         }
 
-        .back-btn {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-right: 0.2rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: transparent;
-        }
-
-        .back-btn:hover { color: var(--secondary); background: #e2e8f0; transform: translateX(-3px); }
-
-        .page-title-header {
+        .brand {
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.6rem;
+            letter-spacing: -0.04em;
             color: var(--secondary);
             display: flex;
             align-items: center;
-            gap: 8px;
-            letter-spacing: -0.02em;
         }
+
+        .brand-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-left: 2px;
+            box-shadow: 0 0 12px var(--primary);
+            animation: pulseDot 2s infinite;
+        }
+
+        .admin-micro {
+            font-size: 0.7rem;
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -6px;
+            left: 50%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--secondary); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; left: 0; }
 
         .user-actions { display: flex; gap: 0.8rem; align-items: center; }
 
         .icon-btn {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 50%;
@@ -154,576 +176,387 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
             color: var(--secondary);
             font-size: 1.1rem;
         }
 
-        .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
-        .icon-btn.active-map { background: var(--secondary); color: white; border-color: var(--secondary); }
-
-        /* ----- Main Layout & Search ----- */
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; position: relative; }
-
-        .search-filter-section {
-            background: var(--card-bg);
-            padding: 1.2rem;
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            position: relative;
-            z-index: 100;
-        }
-
-        .search-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-        .search-wrapper { flex: 2; min-width: 250px; position: relative; }
-        
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: var(--background);
-            border-radius: var(--radius-md);
-            padding: 0.75rem 1.2rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .search-bar:focus-within {
+        .icon-btn:hover {
+            transform: scale(1.1);
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-light);
-            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
         }
 
-        .search-bar i { color: var(--primary); margin-right: 12px; font-size: 1.1rem; transition: transform 0.3s ease; }
-        .search-bar:focus-within i { transform: scale(1.1); }
-        .search-bar input { flex-grow: 1; border: none; background: transparent; outline: none; font-size: 0.95rem; color: var(--secondary); font-weight: 500;}
-        .search-bar input::placeholder { color: #94a3b8; font-weight: 400;}
+        .back-btn {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .back-btn:hover { color: var(--secondary); transform: translateX(-3px); }
 
-        .location-btn {
-            background: var(--primary-light);
-            border: 1px solid transparent;
-            border-radius: var(--radius-md);
-            padding: 0.75rem 1.2rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            cursor: pointer;
-            white-space: nowrap;
+        /* ----- Main Layout ----- */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 1rem 1.2rem; position: relative; }
+
+        /* Unified Search Bar */
+        .search-wrapper {
+            background: var(--bg-card);
+            border-radius: 100px;
+            padding: 6px 6px 6px 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--border);
+            margin-bottom: 1.2rem;
+            transition: box-shadow 0.3s;
+            position: relative;
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 0 0 3px var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .search-wrapper i.fa-search { color: var(--primary); font-size: 1.1rem; }
+        
+        .search-wrapper input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--secondary);
+            background: transparent;
+        }
+
+        .search-wrapper input::placeholder { color: #94a3b8; font-weight: 400; }
+
+        .locate-btn {
+            background: var(--bg-main);
+            color: var(--secondary);
+            border: none;
+            border-radius: 100px;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        
-        .location-btn:hover { background: var(--primary); color: white; }
-        .location-btn i { font-size: 1.1rem; }
+        .locate-btn.active { background: var(--primary); color: white; }
 
-        /* Suggestions Box */
+        /* Suggestions Dropdown */
         .suggestions-box {
             position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            right: 0;
+            top: calc(100% + 10px);
+            left: 0; right: 0;
             background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-float);
             border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            max-height: 250px;
-            overflow-y: auto;
-            z-index: 1100;
-            box-shadow: var(--shadow-card);
+            overflow: hidden;
             display: none;
-            padding: 0.5rem 0;
-            animation: fadeSlideUp 0.2s ease-out;
+            z-index: 1000;
         }
-        
+
         .suggestions-box div {
-            padding: 0.8rem 1.2rem;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--secondary);
+            padding: 1rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: background 0.2s;
-            font-weight: 500;
+            border-bottom: 1px solid var(--bg-main);
+            cursor: pointer;
         }
-        
-        .suggestions-box div:hover { background: var(--primary-light); color: var(--primary-dark); padding-left: 1.5rem; }
-        .suggestions-box div i { color: var(--text-muted); font-size: 0.85rem; }
+        .suggestions-box div:hover { background: var(--primary-light); color: var(--primary-dark); }
 
-        /* Filters */
+        /* ----- NEW: Explore Neighborhoods Carousel ----- */
+        .neighborhood-section {
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.5s ease;
+        }
+        .neighborhood-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .neighborhood-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 0.5rem;
+        }
+        .neighborhood-scroll::-webkit-scrollbar { display: none; }
+        
+        .hood-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .hood-card:hover { transform: translateY(-3px); }
+        .hood-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid white;
+            box-shadow: var(--shadow-subtle);
+        }
+        .hood-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            white-space: nowrap;
+        }
+
+        /* ----- NEW: Trust & Insights Banners ----- */
+        .trust-banner {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            gap: 1.5rem;
+            scrollbar-width: none;
+        }
+        .trust-banner::-webkit-scrollbar { display: none; }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            white-space: nowrap;
+        }
+        .trust-item i { color: var(--accent); font-size: 1rem; }
+
+        .market-insight {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-subtle);
+        }
+        .market-insight-icon {
+            background: white;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .market-insight-text { font-size: 0.85rem; font-weight: 600; color: var(--secondary); }
+
+        /* Horizontal Scroll Filters */
         .filter-scroll {
             display: flex;
-            gap: 0.8rem;
+            gap: 10px;
             overflow-x: auto;
-            padding-bottom: 0.5rem;
+            padding-bottom: 10px;
             scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
+            margin-bottom: 0.5rem;
         }
-        
         .filter-scroll::-webkit-scrollbar { display: none; }
 
         .filter-chip {
-            background: white;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 0.6rem 1.4rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 100px;
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-muted);
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
+            box-shadow: var(--shadow-subtle);
             display: flex;
             align-items: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
+            gap: 6px;
         }
+        .filter-chip.active { background: var(--secondary); color: white; border-color: var(--secondary); }
+        .filter-chip i { opacity: 0.8; }
 
-        .filter-chip.active {
-            background: var(--secondary);
-            color: white;
-            border-color: var(--secondary);
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .filter-chip:hover:not(.active) { background: #f1f5f9; color: var(--secondary); }
-
-        /* ----- Results Meta & Sort ----- */
-        .results-meta {
+        /* Results & Sort */
+        .meta-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-            opacity: 0;
-        }
-
-        .sort-dropdown {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            padding: 6px 14px;
-            border-radius: var(--radius-md);
-            background: white;
-            border: 1px solid var(--border);
-            font-weight: 600;
-            color: var(--secondary);
-            transition: all 0.2s;
-        }
-        
-        .sort-dropdown:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
-
-        .sort-options {
-            position: absolute;
-            right: 0;
-            top: calc(100% + 8px);
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-floating);
-            display: none;
-            flex-direction: column;
-            width: 220px;
-            z-index: 100;
-            overflow: hidden;
-            animation: fadeSlideUp 0.2s ease-out;
-        }
-        
-        .sort-options span {
-            padding: 0.9rem 1.2rem;
-            border-bottom: 1px solid var(--border);
+            margin: 1rem 0;
             font-size: 0.9rem;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
         }
-        
-        .sort-options span:last-child { border-bottom: none; }
-        .sort-options span:hover { background: var(--primary-light); color: var(--primary-dark); }
-        .sort-dropdown.active .sort-options { display: flex; }
+        .sort-btn { background: transparent; border: none; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
-        /* ----- Property Grid & Carousel UX ----- */
+        /* ----- Vertical Property Cards (Mobile First UX) ----- */
         .property-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 
         .property-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border);
-            padding: 1rem;
-            display: flex;
-            flex-direction: row; 
-            gap: 1.2rem;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            opacity: 0;
-            animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .property-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-card);
-            border-color: #cbd5e1;
-        }
-
-        /* Swipeable Image Carousel */
-        .prop-carousel-container {
-            position: relative;
-            width: 145px;
-            flex-shrink: 0;
+            background: var(--bg-card);
             border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: #e2e8f0;
-        }
-
-        .prop-image-scroll {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox */
-            -webkit-overflow-scrolling: touch;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            inset: 0;
-        }
-        
-        .prop-image-scroll::-webkit-scrollbar { display: none; } /* Chrome */
-
-        .prop-image-slide {
-            flex: 0 0 100%;
-            width: 100%;
-            height: 100%;
-            scroll-snap-align: start;
+            overflow: hidden; 
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
             position: relative;
         }
+        .property-card:hover { box-shadow: var(--shadow-float); transform: translateY(-4px); }
+        
+        /* Premium Glow for Assured Properties */
+        .property-card.assured { border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: var(--shadow-glow); }
 
-        .prop-image-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        /* Image Carousel */
+        .prop-image-wrapper { position: relative; width: 100%; height: 240px; background: #e2e8f0; }
+        .prop-image-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; height: 100%; width: 100%; }
+        .prop-image-scroll::-webkit-scrollbar { display: none; }
+        .prop-image-slide { flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: center; }
+        .prop-image-slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        .carousel-indicators {
-            position: absolute;
-            bottom: 8px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .dot {
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        .dot.active { background: white; width: 12px; border-radius: 10px; }
-
+        /* Overlays on Image */
         .prop-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: white;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 2;
-            box-shadow: var(--shadow-sm);
+            position: absolute; top: 12px; left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--secondary);
+            font-size: 0.7rem; font-weight: 700;
+            padding: 4px 10px; border-radius: 100px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 4px; z-index: 10;
         }
-
-        .prop-badge.verified { background: var(--accent); }
-
-        .prop-photos-count {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            z-index: 2;
-        }
-
-        .prop-details {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-width: 0; 
-        }
-
-        .prop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; }
-
-        .prop-price { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 4px;}
-        .prop-price span { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+        .prop-badge.assured { background: var(--secondary); color: var(--gold); }
+        .prop-badge.verified i { color: var(--accent); }
 
         .fav-btn {
-            color: #cbd5e1;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-            position: relative;
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none; width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #94a3b8; font-size: 1.1rem; cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; transition: all 0.2s;
         }
-        
-        .fav-btn:hover { color: #f87171; border-color: #fca5a5; transform: scale(1.1); }
-        .fav-btn.active { color: #ef4444; border-color: #fca5a5; background: #fef2f2; animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .fav-btn.active { color: #ef4444; animation: pop 0.3s ease; }
 
-        .prop-title { font-size: 1.1rem; font-weight: 700; color: var(--secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.4rem; }
-        .prop-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; }
-
-        .prop-specs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 16px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin-bottom: 1.2rem;
+        .carousel-dots {
+            position: absolute; bottom: 12px; left: 0; right: 0;
+            display: flex; justify-content: center; gap: 6px; z-index: 10;
         }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: white; width: 14px; border-radius: 10px; }
 
-        .spec-item { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border);}
-        .spec-item i { color: var(--primary); opacity: 0.9; }
+        /* Card Content Details */
+        .prop-details { padding: 1.2rem; }
+        .prop-price-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; }
+        .prop-price { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.02em; }
+        .prop-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .prop-type { font-size: 0.8rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 4px 10px; border-radius: 8px; }
 
-        /* Enhanced CTA */
+        .prop-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.3rem; line-height: 1.3; }
+        .prop-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; }
+
+        .prop-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; }
+        .spec-pill { background: var(--bg-main); color: var(--secondary); font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.03); }
+        .spec-pill i { opacity: 0.6; font-size: 0.9rem; }
+
         .view-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary-light) 0%, #e0e7ff 100%);
-            color: var(--primary-dark);
-            text-align: center;
-            padding: 0.9rem;
-            border-radius: var(--radius-md);
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: auto; 
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(37, 99, 235, 0.1);
+            display: block; width: 100%;
+            background: var(--bg-main); color: var(--secondary);
+            text-align: center; padding: 0.8rem; border-radius: var(--radius-md);
+            font-size: 0.95rem; font-weight: 600; text-decoration: none;
+            transition: all 0.2s; border: 1px solid var(--border);
         }
-
-        .view-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
-            transform: skewX(-20deg);
-            transition: all 0.5s ease;
-        }
-
-        .view-btn:hover {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-            transform: translateY(-2px);
-            border-color: transparent;
-        }
-
-        .view-btn:hover::before { left: 150%; }
-
-        /* ----- Map View Placeholder ----- */
-        .map-view-container {
-            display: none;
-            width: 100%;
-            height: 60vh;
-            background: #e2e8f0;
-            border-radius: var(--radius-xl);
-            position: relative;
-            overflow: hidden;
-            animation: fadeSlideUp 0.5s forwards;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border);
-        }
+        .view-btn:hover { background: var(--secondary); color: white; }
         
-        .map-view-container.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 15px;
-            background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .map-view-container.active::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(3px);
-        }
+        /* Assured Button Style */
+        .property-card.assured .view-btn { background: var(--secondary); color: white; border: none; }
+        .property-card.assured .view-btn:hover { background: var(--primary); }
 
-        .map-view-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-floating);
-            max-width: 80%;
+        /* ----- Floating Map Toggle ----- */
+        .floating-map-btn {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: var(--secondary); color: white;
+            padding: 0.8rem 1.5rem; border-radius: 100px;
+            font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3); border: none; cursor: pointer; z-index: 1000; transition: all 0.3s;
         }
+        .floating-map-btn:active { transform: translateX(-50%) scale(0.95); }
 
-        /* ----- Skeleton Loader Styles ----- */
-        .skeleton {
-            background: #f6f7f8;
-            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-            background-repeat: no-repeat;
-            background-size: 800px 100%; 
-            animation-duration: 1.5s;
-            animation-fill-mode: forwards; 
-            animation-iteration-count: infinite;
-            animation-name: shimmer;
-            animation-timing-function: linear;
-            border-radius: 8px;
+        /* ----- Bottom Nav ----- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; padding: 0.8rem 0;
+            padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+            z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
         }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 600; width: 60px; }
+        .nav-item i { font-size: 1.4rem; transition: 0.2s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-2px); }
 
-        .skeleton-card {
-            background: white;
-            border-radius: var(--radius-xl);
-            padding: 1rem;
-            display: flex;
-            gap: 1.2rem;
-            border: 1px solid var(--border);
+        /* Desktop Adjustments */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .admin-micro { display: none; }
         }
-
-        .skeleton-img { width: 145px; height: 180px; border-radius: var(--radius-lg); flex-shrink: 0; }
-        .skeleton-details { flex-grow: 1; display: flex; flex-direction: column; gap: 12px; }
-        .skeleton-price { height: 32px; width: 45%; margin-bottom: 5px; }
-        .skeleton-title { height: 22px; width: 85%; }
-        .skeleton-loc { height: 16px; width: 65%; margin-bottom: 10px; }
-        .skeleton-specs { height: 24px; width: 95%; margin-bottom: auto; }
-        .skeleton-btn { height: 48px; width: 100%; border-radius: var(--radius-md); margin-top: 15px; }
-
-        /* ----- Desktop Adjustments ----- */
         @media (min-width: 768px) {
-            .search-filter-section { flex-direction: row; align-items: center; padding: 1rem 1.5rem;}
-            .search-row { flex-grow: 1; }
-            .filter-scroll { max-width: 55%; padding-bottom: 0; }
-            .property-grid { grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
-            .property-card { flex-direction: column; padding: 1.4rem; }
-            .prop-carousel-container { width: 100%; height: 250px; border-radius: var(--radius-lg); }
-            .skeleton-card { flex-direction: column; }
-            .skeleton-img { width: 100%; height: 250px; }
-            .map-view-container { height: 75vh; }
-        }
-
-        /* ----- Mobile Glassmorphic Floating Bottom Nav ----- */
-        .bottom-nav { display: none; }
-        @media (max-width: 767px) {
-            .bottom-nav {
-                display: flex;
-                position: fixed;
-                bottom: 15px; 
-                left: 15px; 
-                width: calc(100% - 30px);
-                background: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.5);
-                box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
-                border-radius: 30px;
-                justify-content: space-around;
-                align-items: center;
-                padding: 0.6rem 0;
-                z-index: 1000;
-            }
-
-            .nav-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
-                color: var(--text-muted);
-                text-decoration: none;
-                font-size: 0.65rem;
-                font-weight: 600;
-                position: relative;
-                transition: all 0.3s;
-                padding: 5px 15px;
-                border-radius: 20px;
-            }
-
-            .nav-item i { font-size: 1.25rem; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-            
-            .nav-item.active { color: var(--primary); background: var(--primary-light); }
-            .nav-item.active i { transform: translateY(-2px); }
-            
-            /* Center FAB-style Button */
-            .nav-item.center-fab {
-                background: var(--primary);
-                color: white;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-                transform: translateY(-15px);
-                border: 4px solid var(--background);
-            }
-            .nav-item.center-fab i { font-size: 1.5rem; }
-            .nav-item.center-fab span { display: none; }
-
-            body { padding-bottom: 100px; } /* Prevent overlap */
+            .bottom-nav, .floating-map-btn { display: none; }
+            body { padding-bottom: 2rem; }
+            .property-grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+            .search-wrapper { max-width: 800px; margin: 0 auto 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Standardized Header -->
     <header class="header">
         <div class="header-container">
-            <div class="brand-wrapper">
-                <a href="#" class="back-btn ripple-btn"><i class="fas fa-arrow-left"></i></a>
-                <span class="page-title-header"><i class="fas fa-layer-group" style="color:var(--primary)"></i> Zenzy Rent</span>
+            <div style="display: flex; align-items: center;">
+                <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <a href="#" class="brand-wrapper">
+                    <span class="brand">zenzy<span class="brand-dot"></span></span>
+                </a>
+                <div class="admin-micro" style="margin-left:15px;"><i class="fas fa-code-branch"></i> branch/block · admin protocol</div>
             </div>
-            
+
+            <nav class="nav-links">
+                <a href="#">HOME</a>
+                <a href="#" class="active">RENTALS</a>
+                <a href="#">SERVICES</a>
+                <a href="#">CONTACT</a>
+            </nav>
+
             <div class="user-actions">
-                <button class="icon-btn ripple-btn" id="mapToggleBtn" title="Map View"><i class="far fa-map"></i></button>
-                <button class="icon-btn ripple-btn" style="background: var(--primary-light); color: var(--primary); border:none;"><i class="fas fa-sliders-h"></i></button>
+                <span class="icon-btn"><i class="fas fa-search"></i></span>
+                <span class="icon-btn"><i class="fas fa-user-circle"></i></span>
             </div>
         </div>
     </header>
@@ -731,76 +564,93 @@
     <!-- Main Content -->
     <main class="main-container">
         
-        <!-- Advanced Search & Filters -->
-        <section class="search-filter-section">
-            <div class="search-row">
-                <div class="search-wrapper">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Search by 'Sector', '2 BHK', or Landmark..." autocomplete="off">
-                    </div>
-                    <div id="suggestions" class="suggestions-box"></div>
-                </div>
-                <button class="location-btn ripple-btn" id="locationBtn">
-                    <i class="fas fa-location-crosshairs"></i> <span>Locate Me</span>
-                </button>
-            </div>
-            <div class="filter-scroll" id="filterScroll">
-                <div class="filter-chip active ripple-btn" data-filter="all">All Properties</div>
-                <div class="filter-chip ripple-btn" data-filter="brokerage"><i class="fas fa-bolt" style="color:#f59e0b"></i> Brokerage Free</div>
-                <div class="filter-chip ripple-btn" data-filter="1bhk">1 BHK</div>
-                <div class="filter-chip ripple-btn" data-filter="2bhk">2 BHK</div>
-                <div class="filter-chip ripple-btn" data-filter="3bhk">3+ BHK</div>
-                <div class="filter-chip ripple-btn" data-filter="furnished">Fully Furnished</div>
-                <div class="filter-chip ripple-btn" data-filter="price15k">Under ₹15k</div>
-                <div class="filter-chip ripple-btn" data-filter="verified"><i class="fas fa-shield-halved" style="color:var(--accent)"></i> Verified</div>
-            </div>
-        </section>
+        <!-- Unified Search Bar (Now with Fuzzy Match) -->
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search 'PG', 'Family', 'Studio'..." autocomplete="off">
+            <button class="locate-btn" id="locationBtn">
+                <i class="fas fa-location-crosshairs"></i> <span id="locText">Locate</span>
+            </button>
+            <div id="suggestions" class="suggestions-box"></div>
+        </div>
 
-        <!-- Results Meta -->
-        <div class="results-meta" id="resultsMeta">
-            <span id="resultCount">Finding best homes...</span>
-            <div class="sort-dropdown ripple-btn" id="sortDropdown">
-                <span style="display:flex; align-items:center; gap:8px;"><i class="fas fa-sort-amount-down"></i> <span id="sortText">Relevancy</span></span>
-                <div class="sort-options">
-                    <span data-sort="relevancy"><i class="fas fa-star" style="color:var(--text-muted);"></i> Relevancy</span>
-                    <span data-sort="priceLow"><i class="fas fa-arrow-up-short-wide" style="color:var(--text-muted);"></i> Price: Low to High</span>
-                    <span data-sort="priceHigh"><i class="fas fa-arrow-down-wide-short" style="color:var(--text-muted);"></i> Price: High to Low</span>
-                    <span data-sort="newest"><i class="fas fa-clock" style="color:var(--text-muted);"></i> Newest First</span>
+        <!-- Explore Neighborhoods Carousel -->
+        <div class="neighborhood-section">
+            <div class="neighborhood-title">Explore Top Blocks <a href="#" style="font-size:0.8rem; color:var(--primary); text-decoration:none; font-weight:600;">View All</a></div>
+            <div class="neighborhood-scroll">
+                <div class="hood-card">
+                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=200&q=80');"></div>
+                    <span class="hood-name">Block 4</span>
+                </div>
+                <div class="hood-card">
+                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80');"></div>
+                    <span class="hood-name">Zone A</span>
+                </div>
+                <div class="hood-card">
+                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=200&q=80');"></div>
+                    <span class="hood-name">Residency</span>
+                </div>
+                <div class="hood-card">
+                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=200&q=80');"></div>
+                    <span class="hood-name">Downtown</span>
+                </div>
+                <div class="hood-card">
+                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=200&q=80');"></div>
+                    <span class="hood-name">Lake Vista</span>
                 </div>
             </div>
         </div>
 
-        <!-- Property Grid (Dynamically Populated) -->
-        <div class="property-grid" id="propertyGrid">
-            <!-- Skeletons / Data will be injected here -->
+        <!-- Trust Banner -->
+        <div class="trust-banner">
+            <div class="trust-item"><i class="fas fa-shield-alt"></i> 100% Verified Owners</div>
+            <div class="trust-item"><i class="fas fa-bolt"></i> Zero Brokerage Access</div>
+            <div class="trust-item"><i class="fas fa-key"></i> Instant Move-in Ready</div>
         </div>
 
-        <!-- Map View Placeholder -->
-        <div class="map-view-container" id="mapView">
-            <div class="map-view-content">
-                <i class="fas fa-map-location-dot" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                <h2 style="color: var(--secondary); margin-bottom: 0.5rem;">Interactive Map View</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Pan and zoom to find properties visually. <br> Available in Zenzy App V2.</p>
-                <button class="view-btn ripple-btn" style="max-width: 200px; margin: 0 auto;" id="closeMapBtn">Return to List</button>
-            </div>
+        <!-- Market Insight -->
+        <div class="market-insight">
+            <div class="market-insight-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="market-insight-text">📈 Rents in <strong>Block 4</strong> have dropped by 5% this week. Great time to lock in a deal!</div>
         </div>
+
+        <!-- Advanced Demographic Filters -->
+        <div class="filter-scroll" id="filterScroll">
+            <div class="filter-chip active" data-filter="all">All Homes</div>
+            <div class="filter-chip" data-filter="family"><i class="fas fa-users"></i> Family</div>
+            <div class="filter-chip" data-filter="bachelors"><i class="fas fa-user-friends"></i> Bachelors</div>
+            <div class="filter-chip" data-filter="girls"><i class="fas fa-female"></i> Girls Only</div>
+            <div class="filter-chip" data-filter="student"><i class="fas fa-book-reader"></i> Student</div>
+            <div class="filter-chip" data-filter="pg"><i class="fas fa-bed"></i> PG</div>
+            <div class="filter-chip" data-filter="assured"><i class="fas fa-crown" style="color:var(--gold)"></i> Zenzy Assured</div>
+            <div class="filter-chip" data-filter="brokerage"><i class="fas fa-bolt" style="color:#f59e0b"></i> No Brokerage</div>
+        </div>
+
+        <!-- Meta info -->
+        <div class="meta-header" id="resultsMeta">
+            <span id="resultCount">Searching...</span>
+            <button class="sort-btn" id="sortDropdown"><i class="fas fa-sort-amount-down"></i> Sort</button>
+        </div>
+
+        <!-- Vertical Property Grid -->
+        <div class="property-grid" id="propertyGrid"></div>
 
     </main>
 
-    <!-- Mobile Floating Bottom Navigation -->
+    <!-- Floating Map Toggle -->
+    <button class="floating-map-btn" id="mapToggleBtn">
+        <span>Map View</span> <i class="fas fa-map"></i>
+    </button>
+
+    <!-- iOS Style Bottom Navigation -->
     <nav class="bottom-nav">
         <a href="#" class="nav-item">
-            <i class="fas fa-house"></i>
-            <span>Home</span>
+            <i class="fas fa-compass"></i>
+            <span>Explore</span>
         </a>
-        <a href="#" class="nav-item active ripple-btn">
-            <i class="fas fa-building"></i>
+        <a href="#" class="nav-item active">
+            <i class="fas fa-house-chimney"></i>
             <span>Rent</span>
-        </a>
-        <a href="#" class="nav-item center-fab ripple-btn">
-            <i class="fas fa-plus"></i>
-            <span>Add</span>
         </a>
         <a href="#" class="nav-item">
             <i class="far fa-heart"></i>
@@ -814,401 +664,281 @@
 
     <script>
         (function() {
-            // ---------- UX: Ripple Effect Function ----------
-            function createRipple(event) {
-                const button = event.currentTarget;
-                const circle = document.createElement("span");
-                const diameter = Math.max(button.clientWidth, button.clientHeight);
-                const radius = diameter / 2;
-                const rect = button.getBoundingClientRect();
-
-                // Handle touch and click events properly
-                let clientX = event.clientX;
-                let clientY = event.clientY;
-                if (event.type === 'touchstart') {
-                    clientX = event.touches[0].clientX;
-                    clientY = event.touches[0].clientY;
-                }
-
-                circle.style.width = circle.style.height = `${diameter}px`;
-                circle.style.left = `${clientX - rect.left - radius}px`;
-                circle.style.top = `${clientY - rect.top - radius}px`;
-                circle.classList.add("ripple");
-
-                const ripple = button.getElementsByClassName("ripple")[0];
-                if (ripple) { ripple.remove(); }
-                button.appendChild(circle);
-            }
-
-            function attachRipples() {
-                const buttons = document.querySelectorAll('.ripple-btn');
-                buttons.forEach(btn => {
-                    // Prevent duplicate attachments
-                    btn.removeEventListener('mousedown', createRipple);
-                    btn.removeEventListener('touchstart', createRipple);
-                    btn.addEventListener('mousedown', createRipple);
-                    btn.addEventListener('touchstart', createRipple, {passive: true});
-                });
-            }
-
-            // ---------- MOCK DATASET (With Multiple Images for Carousel) ----------
+            // ---------- DATA (Updated with Demographics) ----------
             const properties = [
-                { id:1, title:"2 BHK Independent Floor", price:18500, bhk:2, location:"Block 4, Near Metro Station", sector:"Zone 4", beds:2, baths:2, sqft:950, furnishing:"Semi-Furnished", parking:true, verified:true, brokerage:false, tags:["metro", "independent"], 
-                  images:["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80"], photos:8 },
-                { id:2, title:"1 BHK Studio Apartment", price:12000, bhk:1, location:"Block 2, Residency Greens", sector:"Zone 2", beds:1, baths:1, sqft:450, furnishing:"Semi-Furnished", parking:false, verified:false, brokerage:true, tags:["brokerage free","studio"], 
-                  images:["https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80"], photos:5 },
-                { id:3, title:"3 BHK Luxury Villa", price:45000, bhk:3, location:"Zone A, Protocol Estates", sector:"Zone 1", beds:3, baths:3, sqft:2100, furnishing:"Fully Furnished", parking:true, verified:false, brokerage:false, tags:["premium","villa"], 
-                  images:["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"], photos:14 },
-                { id:4, title:"Single Room / PG Setup", price:8500, bhk:1, location:"Block 5, Market Area", sector:"Zone 3", beds:1, baths:1, sqft:null, furnishing:"Basic", parking:false, verified:true, brokerage:false, tags:["pg","wifi", "room"], 
-                  images:["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"], photos:3 },
-                { id:5, title:"2 BHK Premium Lake View", price:24000, bhk:2, location:"Block 7, Lake Vista", sector:"Zone 2", beds:2, baths:2, sqft:1120, furnishing:"Fully Furnished", parking:true, verified:true, brokerage:false, tags:["furnished","lake", "premium"], 
-                  images:["https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80"], photos:10 },
-                { id:6, title:"1 BHK + Study (Brokerage Free)", price:16500, bhk:1, location:"Block 9, Downtown", sector:"Zone 4", beds:1, baths:1, sqft:680, furnishing:"Semi-Furnished", parking:true, verified:true, brokerage:true, tags:["metro","study", "brokerage free"], 
-                  images:["https://images.unsplash.com/photo-1505873242700-f2899d99cfac?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80"], photos:6 }
+                { id:1, title:"Independent Floor with Balcony", price:18500, type:"2 BHK", location:"Block 4, Metro Sector", beds:2, baths:2, sqft:950, verified:true, assured:true, brokerage:false, tags:["metro", "independent", "family", "bachelors"], 
+                  images:["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80"] },
+                { id:2, title:"Cozy Studio Apartment", price:12000, type:"1 BHK", location:"Block 2, Residency Greens", beds:1, baths:1, sqft:450, verified:false, assured:false, brokerage:true, tags:["studio", "student", "bachelors"], 
+                  images:["https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80"] },
+                { id:3, title:"Luxury Villa with Garden", price:45000, type:"3 BHK", location:"Zone A, Protocol Estates", beds:3, baths:3, sqft:2100, verified:true, assured:true, brokerage:false, tags:["premium","villa", "family"], 
+                  images:["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80"] },
+                { id:4, title:"Modern Furnished Apartment", price:24000, type:"2 BHK", location:"Block 7, Lake Vista", beds:2, baths:2, sqft:1120, verified:true, assured:false, brokerage:false, tags:["lake", "premium", "furnished", "family"], 
+                  images:["https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80"] },
+                { id:5, title:"Safe & Secure Girls PG", price:6500, type:"PG", location:"Block 5, Near University", beds:1, baths:1, sqft:null, verified:true, assured:true, brokerage:false, tags:["pg", "girls", "student", "furnished"], 
+                  images:["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"] },
+                { id:6, title:"Premium Boys PG Setup", price:7000, type:"PG", location:"Zone B, Metro Market", beds:1, baths:1, sqft:null, verified:true, assured:false, brokerage:false, tags:["pg", "bachelors", "student"], 
+                  images:["https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"] },
+                { id:7, title:"Spacious 3 BHK for Family", price:32000, type:"3 BHK", location:"Block 9, Green Park", beds:3, baths:3, sqft:1800, verified:true, assured:true, brokerage:true, tags:["family", "premium"], 
+                  images:["https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"] }
             ];
 
-            // ---------- STATE ----------
-            let currentFilter = 'all';
-            let currentSort = 'relevancy';
-            let searchTerm = '';
-            let userLocation = '';
-            let isMapView = false;
-
+            // ---------- STATE & ELEMENTS ----------
+            let currentFilter = 'all', searchTerm = '';
+            
             const grid = document.getElementById('propertyGrid');
-            const mapView = document.getElementById('mapView');
-            const resultsMeta = document.getElementById('resultsMeta');
             const searchInput = document.getElementById('searchInput');
-            const suggestionsBox = document.getElementById('suggestions');
             const filterChips = document.querySelectorAll('.filter-chip');
-            const sortDropdown = document.getElementById('sortDropdown');
-            const sortOptions = document.querySelectorAll('.sort-options span');
-            const sortText = document.getElementById('sortText');
-            const locationBtn = document.getElementById('locationBtn');
             const resultSpan = document.getElementById('resultCount');
-            const mapToggleBtn = document.getElementById('mapToggleBtn');
-            const closeMapBtn = document.getElementById('closeMapBtn');
+            const suggestionsBox = document.getElementById('suggestions');
 
-            // ---------- RENDER SKELETONS ----------
-            function renderSkeletons() {
-                if (isMapView) return;
-                let skeletonHTML = '';
-                for(let i=0; i<4; i++) {
-                    skeletonHTML += `
-                        <div class="skeleton-card">
-                            <div class="skeleton skeleton-img"></div>
-                            <div class="skeleton-details">
-                                <div class="skeleton skeleton-price"></div>
-                                <div class="skeleton skeleton-title"></div>
-                                <div class="skeleton skeleton-loc"></div>
-                                <div class="skeleton skeleton-specs"></div>
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                    `;
+            // ---------- FUZZY SEARCH (Levenshtein Distance) ----------
+            function getEditDistance(a, b) {
+                if (a.length === 0) return b.length;
+                if (b.length === 0) return a.length;
+                const matrix = [];
+                for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+                for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+                for (let i = 1; i <= b.length; i++) {
+                    for (let j = 1; j <= a.length; j++) {
+                        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                            matrix[i][j] = matrix[i - 1][j - 1];
+                        } else {
+                            matrix[i][j] = Math.min(
+                                matrix[i - 1][j - 1] + 1,
+                                Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1)
+                            );
+                        }
+                    }
                 }
-                grid.innerHTML = skeletonHTML;
-                resultSpan.innerText = "Finding best homes...";
+                return matrix[b.length][a.length];
             }
 
-            // ---------- LOGIC ----------
+            // ---------- RENDER LOGIC ----------
             function filterProperties() {
-                let filtered = properties.filter(p => {
+                return properties.filter(p => {
+                    // Check Chips Filters First
                     if (currentFilter !== 'all') {
+                        if (currentFilter === 'assured' && !p.assured) return false;
                         if (currentFilter === 'brokerage' && !p.brokerage) return false;
-                        if (currentFilter === '1bhk' && p.bhk !== 1) return false;
-                        if (currentFilter === '2bhk' && p.bhk !== 2) return false;
-                        if (currentFilter === '3bhk' && p.bhk < 3) return false;
-                        if (currentFilter === 'furnished' && p.furnishing !== 'Fully Furnished') return false;
-                        if (currentFilter === 'price15k' && p.price >= 15000) return false;
-                        if (currentFilter === 'verified' && !p.verified) return false;
+                        if (['family', 'bachelors', 'girls', 'student', 'pg'].includes(currentFilter)) {
+                            if (!p.tags.includes(currentFilter)) return false;
+                        }
                     }
-                    if (searchTerm.trim() !== '') {
-                        const term = searchTerm.toLowerCase();
-                        const inTitle = p.title.toLowerCase().includes(term);
-                        const inLoc = p.location.toLowerCase().includes(term);
-                        const tagMatch = p.tags.some(t => t.toLowerCase().includes(term));
-                        if (!(inTitle || inLoc || tagMatch)) return false;
+
+                    // Check Search with Fuzzy Tolerance
+                    if (searchTerm) {
+                        const term = searchTerm.toLowerCase().trim();
+                        const fullText = (p.title + " " + p.location + " " + p.tags.join(" ") + " " + p.type).toLowerCase();
+                        
+                        // Exact match
+                        if (fullText.includes(term)) return true;
+                        
+                        // Typo tolerance (Fuzzy Match) for tags/keywords if term is long enough
+                        if (term.length >= 4) {
+                            const isFuzzyMatch = p.tags.some(tag => getEditDistance(term, tag) <= 2) || 
+                                                 getEditDistance(term, p.type.toLowerCase()) <= 2;
+                            return isFuzzyMatch;
+                        }
+                        return false;
                     }
                     return true;
                 });
-
-                if (currentSort === 'priceLow') filtered.sort((a,b) => a.price - b.price);
-                else if (currentSort === 'priceHigh') filtered.sort((a,b) => b.price - a.price);
-                else if (currentSort === 'newest') filtered.sort((a,b) => b.id - a.id);
-                else filtered.sort((a,b) => a.id - b.id); 
-
-                return filtered;
             }
 
-            // ---------- RENDER DATA ----------
             function render() {
-                if (isMapView) return;
-
                 const filtered = filterProperties();
-                
-                // Set Meta Text
-                let locText = userLocation ? ` near <strong>${userLocation}</strong>` : ` in <strong>your area</strong>`;
-                resultSpan.innerHTML = `Showing ${filtered.length} properties${locText}`;
+                resultSpan.innerHTML = `<strong>${filtered.length} homes</strong> found in your protocol`;
 
                 if (filtered.length === 0) {
-                    grid.innerHTML = `
-                        <div style="grid-column:1/-1; text-align:center; padding:5rem 2rem; background:white; border-radius:var(--radius-xl); border: 1px dashed var(--border); animation: fadeSlideUp 0.5s;">
-                            <i class="fas fa-house-circle-xmark" style="font-size: 3.5rem; color: #cbd5e1; margin-bottom: 1.5rem;"></i>
-                            <h3 style="color:var(--secondary); margin-bottom: 0.5rem; font-size:1.2rem;">No properties found</h3>
-                            <p style="color:var(--text-muted); font-size: 0.95rem;">Try adjusting your search or clearing filters.</p>
-                        </div>`;
+                    grid.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);"><i class="fas fa-search-minus" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i><p>No properties match your filters or search.</p></div>`;
                     return;
                 }
 
                 let html = '';
-                filtered.forEach((p, index) => {
-                    const delay = index * 0.1;
+                filtered.forEach((p, idx) => {
                     const isFav = localStorage.getItem(`fav_${p.id}`) === 'true';
-                    const favIcon = isFav ? 'fas' : 'far';
+                    const assuredClass = p.assured ? 'assured' : '';
                     
-                    let badgeHTML = '';
-                    if (p.verified) {
-                        badgeHTML = '<span class="prop-badge verified"><i class="fas fa-check-circle"></i> Zenzy Verified</span>';
-                    } else if (p.brokerage) {
-                        badgeHTML = '<span class="prop-badge" style="background:var(--accent);">Brokerage Free</span>';
-                    } else if (p.price > 30000) {
-                        badgeHTML = '<span class="prop-badge" style="background:var(--secondary);">Premium</span>';
-                    }
+                    let badge = p.assured ? `<div class="prop-badge assured"><i class="fas fa-crown"></i> Zenzy Assured</div>` 
+                              : (p.verified ? `<div class="prop-badge verified"><i class="fas fa-check-circle"></i> Verified</div>` 
+                              : (p.brokerage ? `<div class="prop-badge" style="color:var(--accent);">No Brokerage</div>` : ''));
 
-                    const sqftHTML = p.sqft ? `<span class="spec-item"><i class="fas fa-vector-square"></i> ${p.sqft} sqft</span>` : '';
-                    
-                    // Generate Swipeable Images
-                    let slidesHTML = '';
-                    let dotsHTML = '';
-                    p.images.forEach((imgUrl, i) => {
-                        slidesHTML += `<div class="prop-image-slide"><img src="${imgUrl}" alt="${p.title} Image ${i+1}" loading="lazy"></div>`;
-                        dotsHTML += `<div class="dot ${i===0 ? 'active': ''}"></div>`;
+                    let slides = '', dots = '';
+                    p.images.forEach((img, i) => {
+                        slides += `<div class="prop-image-slide"><img src="${img}" alt="Property" loading="lazy"></div>`;
+                        dots += `<div class="dot ${i===0?'active':''}"></div>`;
                     });
 
+                    // Add dynamic pills for demographic tags
+                    let specHTML = `<div class="spec-pill"><i class="fas fa-bed"></i> ${p.beds} Beds</div>
+                                    <div class="spec-pill"><i class="fas fa-bath"></i> ${p.baths} Baths</div>`;
+                    if(p.sqft) specHTML += `<div class="spec-pill"><i class="fas fa-vector-square"></i> ${p.sqft} sqft</div>`;
+                    if(p.tags.includes('family')) specHTML += `<div class="spec-pill" style="color:#0f766e; background:#ccfbf1;"><i class="fas fa-users"></i> Family</div>`;
+                    if(p.tags.includes('girls')) specHTML += `<div class="spec-pill" style="color:#be185d; background:#fce7f3;"><i class="fas fa-female"></i> Girls</div>`;
+                    if(p.tags.includes('bachelors') && !p.tags.includes('girls')) specHTML += `<div class="spec-pill" style="color:#1d4ed8; background:#dbeafe;"><i class="fas fa-user-friends"></i> Bachelors</div>`;
+
                     html += `
-                    <article class="property-card" data-id="${p.id}" style="animation-delay: ${delay}s;">
-                        <div class="prop-carousel-container">
-                            ${badgeHTML}
-                            <span class="prop-photos-count"><i class="far fa-image"></i> ${p.photos}</span>
-                            <div class="prop-image-scroll" id="scroll-${p.id}">
-                                ${slidesHTML}
-                            </div>
-                            <div class="carousel-indicators" id="dots-${p.id}">
-                                ${dotsHTML}
-                            </div>
+                    <article class="property-card ${assuredClass}" style="animation-delay: ${idx * 0.1}s">
+                        <div class="prop-image-wrapper">
+                            ${badge}
+                            <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${p.id}"><i class="${isFav?'fas':'far'} fa-heart"></i></button>
+                            <div class="prop-image-scroll" id="scroll-${p.id}">${slides}</div>
+                            <div class="carousel-dots" id="dots-${p.id}">${dots}</div>
                         </div>
                         <div class="prop-details">
-                            <div>
-                                <div class="prop-header">
-                                    <div class="prop-price">₹${p.price.toLocaleString()} <span>/mo</span></div>
-                                    <button class="fav-btn ripple-btn ${isFav ? 'active' : ''}" data-id="${p.id}" aria-label="Save">
-                                        <i class="${favIcon} fa-heart"></i>
-                                    </button>
-                                </div>
-                                <h3 class="prop-title">${p.title}</h3>
-                                <div class="prop-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
-                                <div class="prop-specs">
-                                    <span class="spec-item"><i class="fas fa-bed"></i> ${p.beds}</span>
-                                    <span class="spec-item"><i class="fas fa-bath"></i> ${p.baths}</span>
-                                    ${sqftHTML}
-                                    <span class="spec-item"><i class="fas fa-couch"></i> ${p.furnishing}</span>
-                                </div>
+                            <div class="prop-price-row">
+                                <div class="prop-price">₹${p.price.toLocaleString()} <span>/mo</span></div>
+                                <div class="prop-type">${p.type}</div>
                             </div>
-                            <a href="#" class="view-btn ripple-btn">View Property Details</a>
+                            <h3 class="prop-title">${p.title}</h3>
+                            <div class="prop-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
+                            <div class="prop-specs">${specHTML}</div>
+                            <a href="#" class="view-btn">${p.assured ? 'View Assured Property' : 'View Details'}</a>
                         </div>
                     </article>`;
                 });
+                
                 grid.innerHTML = html;
-
-                // Re-attach listeners for dynamically generated elements
-                attachRipples();
-                attachFavoriteListeners();
-                attachCarouselScrollListeners(filtered);
+                attachListeners();
             }
 
-            // ---------- UI INTERACTION LISTENERS ----------
-            
-            function attachFavoriteListeners() {
+            function triggerRender() {
+                grid.innerHTML = ''; 
+                setTimeout(render, 50);
+            }
+
+            // ---------- EVENT LISTENERS ----------
+            function attachListeners() {
                 document.querySelectorAll('.fav-btn').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
+                    btn.onclick = function(e) {
                         e.preventDefault();
                         const id = this.dataset.id;
                         const icon = this.querySelector('i');
-
-                        if (this.classList.contains('active')) {
-                            this.classList.remove('active');
-                            icon.classList.remove('fas'); icon.classList.add('far');
-                            localStorage.setItem(`fav_${id}`, 'false');
-                        } else {
-                            this.classList.add('active');
-                            icon.classList.remove('far'); icon.classList.add('fas');
+                        if (this.classList.toggle('active')) {
+                            icon.className = 'fas fa-heart';
                             localStorage.setItem(`fav_${id}`, 'true');
+                        } else {
+                            icon.className = 'far fa-heart';
+                            localStorage.setItem(`fav_${id}`, 'false');
+                        }
+                    };
+                });
+
+                properties.forEach(p => {
+                    const scroll = document.getElementById(`scroll-${p.id}`);
+                    const dotsWrap = document.getElementById(`dots-${p.id}`);
+                    if(!scroll || !dotsWrap) return;
+                    const dots = dotsWrap.querySelectorAll('.dot');
+                    
+                    scroll.onscroll = () => {
+                        const idx = Math.round(scroll.scrollLeft / scroll.clientWidth);
+                        dots.forEach((d, i) => d.className = `dot ${i===idx?'active':''}`);
+                    };
+                });
+            }
+
+            filterChips.forEach(chip => {
+                chip.onclick = function() {
+                    filterChips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    triggerRender();
+                };
+            });
+
+            // Handle Smart Search & Suggestions
+            searchInput.oninput = (e) => {
+                searchTerm = e.target.value.toLowerCase().trim();
+                
+                if (searchTerm.length > 2) {
+                    const keywords = ["metro", "studio", "premium", "villa", "furnished", "family", "bachelors", "girls", "student", "pg"];
+                    let matches = [];
+
+                    keywords.forEach(kw => {
+                        if (kw.includes(searchTerm)) {
+                            matches.push({ word: kw, exact: true });
+                        } else {
+                            // Suggest corrections for typos (e.g. "studi" -> "studio", "famly" -> "family")
+                            let distance = getEditDistance(searchTerm, kw);
+                            if (distance <= 2 && searchTerm.length >= 3) {
+                                matches.push({ word: kw, exact: false });
+                            }
                         }
                     });
-                });
-            }
 
-            function attachCarouselScrollListeners(filtered) {
-                // Update active dot based on scroll position
-                filtered.forEach(p => {
-                    const scrollContainer = document.getElementById(`scroll-${p.id}`);
-                    const dotsContainer = document.getElementById(`dots-${p.id}`);
-                    if(!scrollContainer || !dotsContainer) return;
-
-                    const dots = dotsContainer.querySelectorAll('.dot');
-                    
-                    scrollContainer.addEventListener('scroll', () => {
-                        const slideWidth = scrollContainer.clientWidth;
-                        const scrollLeft = scrollContainer.scrollLeft;
-                        const activeIndex = Math.round(scrollLeft / slideWidth);
-                        
-                        dots.forEach((dot, index) => {
-                            if (index === activeIndex) dot.classList.add('active');
-                            else dot.classList.remove('active');
-                        });
-                    }, {passive: true});
-                });
-            }
-
-            // Wrapper to show skeletons then render data
-            function triggerRender() {
-                if(isMapView) return;
-                renderSkeletons();
-                setTimeout(render, 500); // Simulate network latency for premium feel
-            }
-
-            // ---------- SEARCH & SUGGESTIONS ----------
-            function updateSuggestions() {
-                const term = searchInput.value.toLowerCase();
-                if (term.length < 2) { suggestionsBox.style.display = 'none'; return; }
-                
-                const words = ["metro", "studio", "premium", "villa", "pg", "lake", "study", "market area", "downtown", "1 bhk", "2 bhk", "3 bhk"];
-                const unique = words.filter(w => w.includes(term));
-                
-                if (unique.length > 0) {
-                    suggestionsBox.innerHTML = unique.slice(0,5).map(s => `<div><i class="fas fa-magnifying-glass"></i> ${s}</div>`).join('');
-                    suggestionsBox.style.display = 'block';
+                    if (matches.length > 0) {
+                        suggestionsBox.innerHTML = matches.slice(0, 4).map(m => 
+                            `<div>
+                                <i class="fas ${m.exact ? 'fa-search' : 'fa-magic'}"></i> 
+                                ${m.word} 
+                                ${!m.exact ? '<span style="margin-left:auto; font-size:0.7rem; color:var(--text-muted); background:var(--bg-main); padding:2px 6px; border-radius:4px;">Did you mean?</span>' : ''}
+                            </div>`
+                        ).join('');
+                        suggestionsBox.style.display = 'block';
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
                 } else {
                     suggestionsBox.style.display = 'none';
                 }
-            }
 
-            searchInput.addEventListener('input', (e) => {
-                searchTerm = e.target.value;
-                updateSuggestions();
-                clearTimeout(window.searchTimeout);
-                window.searchTimeout = setTimeout(triggerRender, 400);
-            });
+                clearTimeout(window.sTimeout);
+                window.sTimeout = setTimeout(triggerRender, 300);
+            };
 
-            suggestionsBox.addEventListener('click', (e) => {
-                if (e.target.closest('div')) {
-                    const text = e.target.closest('div').innerText.trim();
+            suggestionsBox.onclick = (e) => {
+                const targetDiv = e.target.closest('div');
+                if(targetDiv) {
+                    // Extract text (remove 'Did you mean?' text if present)
+                    const clone = targetDiv.cloneNode(true);
+                    const span = clone.querySelector('span');
+                    if(span) span.remove();
+                    
+                    const text = clone.innerText.trim();
                     searchInput.value = text;
                     searchTerm = text;
                     suggestionsBox.style.display = 'none';
-                    if(!isMapView) triggerRender();
-                }
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target))
-                    suggestionsBox.style.display = 'none';
-                if (!sortDropdown.contains(e.target)) 
-                    sortDropdown.classList.remove('active');
-            });
-
-            // ---------- FILTERS ----------
-            filterChips.forEach(chip => {
-                chip.addEventListener('click', function() {
-                    filterChips.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.filter || 'all';
-                    if(!isMapView) triggerRender();
-                });
-            });
-
-            // ---------- SORT ----------
-            sortDropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-                sortDropdown.classList.toggle('active');
-            });
-
-            sortOptions.forEach(opt => {
-                opt.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const sortVal = e.target.dataset.sort;
-                    currentSort = sortVal;
-                    // Keep generic text for UI, but handle logic
-                    sortText.innerText = e.target.innerText.trim();
-                    sortDropdown.classList.remove('active');
-                    if(!isMapView) triggerRender();
-                });
-            });
-
-            // ---------- GEOLOCATION (Nominatim Reverse Geocode) ----------
-            locationBtn.addEventListener('click', () => {
-                const icon = locationBtn.querySelector('i');
-                const text = locationBtn.querySelector('span');
-                
-                icon.className = 'fas fa-spinner fa-spin';
-                text.innerText = 'Locating...';
-                
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(pos => {
-                        const { latitude, longitude } = pos.coords;
-                        // Fetch real city from Nominatim OpenStreetMap API
-                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`)
-                            .then(r => r.json())
-                            .then(data => {
-                                const city = data.address?.city || data.address?.town || data.address?.village || 'Your Area';
-                                userLocation = city;
-                                icon.className = 'fas fa-location-dot';
-                                text.innerText = city;
-                                locationBtn.style.background = 'var(--primary)';
-                                locationBtn.style.color = 'white';
-                                if(!isMapView) triggerRender();
-                            })
-                            .catch(() => { fallbackLocation(icon, text); });
-                    }, err => { fallbackLocation(icon, text); }, { timeout: 5000 });
-                } else {
-                    fallbackLocation(icon, text);
-                }
-            });
-
-            function fallbackLocation(icon, text) {
-                userLocation = "Jaipur South"; // Fallback Mock
-                icon.className = 'fas fa-location-dot';
-                text.innerText = userLocation;
-                locationBtn.style.background = 'var(--primary)';
-                locationBtn.style.color = 'white';
-                if(!isMapView) triggerRender();
-            }
-
-            // ---------- MAP VIEW TOGGLE ----------
-            function toggleMapView() {
-                isMapView = !isMapView;
-                if (isMapView) {
-                    mapToggleBtn.classList.add('active-map');
-                    grid.style.display = 'none';
-                    resultsMeta.style.display = 'none';
-                    mapView.classList.add('active');
-                } else {
-                    mapToggleBtn.classList.remove('active-map');
-                    mapView.classList.remove('active');
-                    grid.style.display = 'grid';
-                    resultsMeta.style.display = 'flex';
                     triggerRender();
                 }
-            }
+            };
 
-            mapToggleBtn.addEventListener('click', toggleMapView);
-            closeMapBtn.addEventListener('click', toggleMapView);
+            // Close suggestions when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
 
-            // ---------- INITIALIZATION ----------
-            attachRipples();
+            // Init
             triggerRender();
-
         })();
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
