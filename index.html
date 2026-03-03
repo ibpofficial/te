@@ -3,928 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zenzy Rent · Premium Real Estate</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="zz.png">
-
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
+    <title>Memory Lane - Vintage Photos</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --primary-light: #eff6ff;
-            --secondary: #0f172a;
-            --accent: #10b981;
-            --gold: #f59e0b;
-            --bg-main: #f4f7fb;
-            --bg-card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --radius-sm: 8px;
-            --radius-md: 14px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-            --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.04);
-            --shadow-float: 0 8px 30px rgba(15, 23, 42, 0.12);
-            --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.2);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.5;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            padding-bottom: 90px; /* Space for bottom nav */
-        }
-
-        /* ----- Animations ----- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -400px 0; }
-            100% { background-position: 400px 0; }
-        }
-        @keyframes pop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        @keyframes pulseDot {
-            0% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.4); background-color: var(--primary); }
-            100% { opacity: 0.6; transform: scale(1); }
-        }
-
-        /* ----- Standardized Header (from Home Page) ----- */
-        .header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-            padding: 0.8rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .brand {
-            font-weight: 800;
-            font-size: 1.6rem;
-            letter-spacing: -0.04em;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-        }
-
-        .brand-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            margin-left: 2px;
-            box-shadow: 0 0 12px var(--primary);
-            animation: pulseDot 2s infinite;
-        }
-
-        .admin-micro {
-            font-size: 0.7rem;
-            background: #f1f5f9;
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -6px;
-            left: 50%;
-            background: var(--primary);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover, .nav-links a.active { color: var(--secondary); }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; left: 0; }
-
-        .user-actions { display: flex; gap: 0.8rem; align-items: center; }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 50%;
+            background: #0a0a0a;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--secondary);
-            font-size: 1.1rem;
+            padding: 10px;
         }
 
-        .icon-btn:hover {
-            transform: scale(1.1);
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: var(--shadow-sm);
+        /* Main container */
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
         }
 
-        .back-btn {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-right: 0.5rem;
-            transition: all 0.2s;
-            text-decoration: none;
+        /* Mysterious Image Card */
+        .mystery-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .back-btn:hover { color: var(--secondary); transform: translateX(-3px); }
 
-        /* ----- Main Layout ----- */
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 1rem 1.2rem; position: relative; }
-
-        /* Unified Search Bar */
-        .search-wrapper {
-            background: var(--bg-card);
-            border-radius: 100px;
-            padding: 6px 6px 6px 20px;
-            display: flex;
-            align-items: center;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--border);
-            margin-bottom: 1.2rem;
-            transition: box-shadow 0.3s;
+        .image-container {
             position: relative;
-        }
-
-        .search-wrapper:focus-within {
-            box-shadow: 0 0 0 3px var(--primary-light);
-            border-color: var(--primary);
-        }
-
-        .search-wrapper i.fa-search { color: var(--primary); font-size: 1.1rem; }
-        
-        .search-wrapper input {
-            flex-grow: 1;
-            border: none;
-            outline: none;
-            padding: 0.8rem 1rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--secondary);
-            background: transparent;
-        }
-
-        .search-wrapper input::placeholder { color: #94a3b8; font-weight: 400; }
-
-        .locate-btn {
-            background: var(--bg-main);
-            color: var(--secondary);
-            border: none;
-            border-radius: 100px;
-            padding: 0.6rem 1rem;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .locate-btn.active { background: var(--primary); color: white; }
-
-        /* Suggestions Dropdown */
-        .suggestions-box {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0; right: 0;
-            background: white;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-float);
-            border: 1px solid var(--border);
+            width: 100%;
+            border-radius: 25px;
             overflow: hidden;
-            display: none;
-            z-index: 1000;
-        }
-
-        .suggestions-box div {
-            padding: 1rem 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid var(--bg-main);
             cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .suggestions-box div:hover { background: var(--primary-light); color: var(--primary-dark); }
 
-        /* ----- NEW: Explore Neighborhoods Carousel ----- */
-        .neighborhood-section {
-            margin-bottom: 1.5rem;
-            animation: fadeUp 0.5s ease;
+        .faded-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.3;
+            filter: blur(2px);
+            transition: all 0.3s;
+            pointer-events: none; /* So clicks go through to container */
         }
-        .neighborhood-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .neighborhood-scroll {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding-bottom: 0.5rem;
-        }
-        .neighborhood-scroll::-webkit-scrollbar { display: none; }
-        
-        .hood-card {
+
+        .click-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .hood-card:hover { transform: translateY(-3px); }
-        .hood-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid white;
-            box-shadow: var(--shadow-subtle);
-        }
-        .hood-name {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--secondary);
-            white-space: nowrap;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            text-align: center;
+            pointer-events: none;
         }
 
-        /* ----- NEW: Trust & Insights Banners ----- */
-        .trust-banner {
-            display: flex;
-            justify-content: space-between;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-            overflow-x: auto;
-            gap: 1.5rem;
-            scrollbar-width: none;
-        }
-        .trust-banner::-webkit-scrollbar { display: none; }
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
+        .click-overlay h2 {
+            font-size: 32px;
             font-weight: 700;
-            color: var(--secondary);
-            white-space: nowrap;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
         }
-        .trust-item i { color: var(--accent); font-size: 1rem; }
 
-        .market-insight {
-            background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
-            border: 1px solid #c7d2fe;
-            border-radius: var(--radius-md);
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-subtle);
+        .click-overlay p {
+            font-size: 16px;
+            opacity: 0.9;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
         }
-        .market-insight-icon {
-            background: white;
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .market-insight-text { font-size: 0.85rem; font-weight: 600; color: var(--secondary); }
 
-        /* Horizontal Scroll Filters */
-        .filter-scroll {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-            margin-bottom: 0.5rem;
+        .finger-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
         }
-        .filter-scroll::-webkit-scrollbar { display: none; }
 
-        .filter-chip {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1.2rem;
-            border-radius: 100px;
-            font-size: 0.85rem;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Volume indicator (mobile only) */
+        .volume-requirement {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .volume-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .volume-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff87, #60efff);
+            border-radius: 4px;
+            transition: width 0.2s;
+        }
+
+        .volume-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .volume-text span {
+            color: #00ff87;
             font-weight: 600;
-            color: var(--text-muted);
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-subtle);
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
-        .filter-chip.active { background: var(--secondary); color: white; border-color: var(--secondary); }
-        .filter-chip i { opacity: 0.8; }
 
-        /* Results & Sort */
-        .meta-header {
-            display: flex;
-            justify-content: space-between;
+        /* Hidden fullscreen image */
+        .fullscreen-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: none;
+            justify-content: center;
             align-items: center;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-        .sort-btn { background: transparent; border: none; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; cursor: pointer; }
-
-        /* ----- Vertical Property Cards (Mobile First UX) ----- */
-        .property-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-
-        .property-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            overflow: hidden; 
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--border);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 9999;
             opacity: 0;
-            animation: fadeUp 0.5s ease forwards;
-            position: relative;
+            transition: opacity 0.5s;
         }
-        .property-card:hover { box-shadow: var(--shadow-float); transform: translateY(-4px); }
-        
-        /* Premium Glow for Assured Properties */
-        .property-card.assured { border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: var(--shadow-glow); }
 
-        /* Image Carousel */
-        .prop-image-wrapper { position: relative; width: 100%; height: 240px; background: #e2e8f0; }
-        .prop-image-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; height: 100%; width: 100%; }
-        .prop-image-scroll::-webkit-scrollbar { display: none; }
-        .prop-image-slide { flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: center; }
-        .prop-image-slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Overlays on Image */
-        .prop-badge {
-            position: absolute; top: 12px; left: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--secondary);
-            font-size: 0.7rem; font-weight: 700;
-            padding: 4px 10px; border-radius: 100px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex; align-items: center; gap: 4px; z-index: 10;
+        .fullscreen-image.show {
+            display: flex;
+            opacity: 1;
         }
-        .prop-badge.assured { background: var(--secondary); color: var(--gold); }
-        .prop-badge.verified i { color: var(--accent); }
 
-        .fav-btn {
-            position: absolute; top: 12px; right: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            border: none; width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: #94a3b8; font-size: 1.1rem; cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; transition: all 0.2s;
+        .fullscreen-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
-        .fav-btn.active { color: #ef4444; animation: pop 0.3s ease; }
 
-        .carousel-dots {
-            position: absolute; bottom: 12px; left: 0; right: 0;
-            display: flex; justify-content: center; gap: 6px; z-index: 10;
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            font-weight: 300;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: white; width: 14px; border-radius: 10px; }
 
-        /* Card Content Details */
-        .prop-details { padding: 1.2rem; }
-        .prop-price-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; }
-        .prop-price { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.02em; }
-        .prop-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
-        .prop-type { font-size: 0.8rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 4px 10px; border-radius: 8px; }
-
-        .prop-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.3rem; line-height: 1.3; }
-        .prop-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; }
-
-        .prop-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; }
-        .spec-pill { background: var(--bg-main); color: var(--secondary); font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.03); }
-        .spec-pill i { opacity: 0.6; font-size: 0.9rem; }
-
-        .view-btn {
-            display: block; width: 100%;
-            background: var(--bg-main); color: var(--secondary);
-            text-align: center; padding: 0.8rem; border-radius: var(--radius-md);
-            font-size: 0.95rem; font-weight: 600; text-decoration: none;
-            transition: all 0.2s; border: 1px solid var(--border);
+        /* Audio element */
+        #prankAudio {
+            display: none;
         }
-        .view-btn:hover { background: var(--secondary); color: white; }
-        
-        /* Assured Button Style */
-        .property-card.assured .view-btn { background: var(--secondary); color: white; border: none; }
-        .property-card.assured .view-btn:hover { background: var(--primary); }
 
-        /* ----- Floating Map Toggle ----- */
-        .floating-map-btn {
-            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-            background: var(--secondary); color: white;
-            padding: 0.8rem 1.5rem; border-radius: 100px;
-            font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3); border: none; cursor: pointer; z-index: 1000; transition: all 0.3s;
+        /* Mobile warning */
+        .mobile-warning {
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
         }
-        .floating-map-btn:active { transform: translateX(-50%) scale(0.95); }
 
-        /* ----- Bottom Nav ----- */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border);
-            display: flex; justify-content: space-around; padding: 0.8rem 0;
-            padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
-            z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+        /* Volume check status */
+        .volume-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 600; width: 60px; }
-        .nav-item i { font-size: 1.4rem; transition: 0.2s; }
-        .nav-item.active { color: var(--primary); }
-        .nav-item.active i { transform: translateY(-2px); }
 
-        /* Desktop Adjustments */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .admin-micro { display: none; }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background: #ff4444;
+            transition: background 0.3s;
         }
-        @media (min-width: 768px) {
-            .bottom-nav, .floating-map-btn { display: none; }
-            body { padding-bottom: 2rem; }
-            .property-grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
-            .search-wrapper { max-width: 800px; margin: 0 auto 1.5rem; }
+
+        .status-dot.ready {
+            background: #00ff87;
+        }
+
+        /* Instructions */
+        .instructions {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #00ff87;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <!-- Hidden Audio - Replace with your audio file -->
+    <audio id="prankAudio" loop preload="auto" playsinline>
+        <!-- Using a spooky sound as example - replace with your own -->
+        <source src="000.mp3" type="audio/mpeg">
+        <source src="https://www.soundjay.com/misc/sounds/funny-buzzer-1.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- Standardized Header -->
-    <header class="header">
-        <div class="header-container">
-            <div style="display: flex; align-items: center;">
-                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
-                <a href="culture.html" class="brand-wrapper">
-                    <span class="brand">zenzy<span class="brand-dot"></span></span>
-                </a>
-           
-            </div>
+    <!-- Fullscreen Image Reveal -->
+    <div class="fullscreen-image" id="fullscreenImage">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <!-- Replace with your actual image -->
+        <img src="1234.png" alt="Revealed Image" id="revealedImg">
+    </div>
 
-            <nav class="nav-links">
-                <a href="index.html">HOME</a>
-                <a href="#" class="active">RENTALS</a>
-                <a href="service.html">SERVICES</a>
-                <a href="#">CONTACT</a>
-            </nav>
-
-            <div class="user-actions">
-                <span class="icon-btn"><i class="fas fa-search"></i></span>
-                <span class="icon-btn"><i class="fas fa-user-circle"></i></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        
-        <!-- Unified Search Bar (Now with Fuzzy Match) -->
-        <div class="search-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search 'PG', 'Family', 'Studio'..." autocomplete="off">
-            <button class="locate-btn" id="locationBtn">
-                <i class="fas fa-location-crosshairs"></i> <span id="locText">Locate</span>
-            </button>
-            <div id="suggestions" class="suggestions-box"></div>
-        </div>
-
-        <!-- Explore Neighborhoods Carousel -->
-        <div class="neighborhood-section">
-            <div class="neighborhood-title">Explore Top Blocks <a href="#" style="font-size:0.8rem; color:var(--primary); text-decoration:none; font-weight:600;">View All</a></div>
-            <div class="neighborhood-scroll">
-                <div class="hood-card">
-                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=200&q=80');"></div>
-                    <span class="hood-name">Pratap nagar </span>
-                </div>
-                <div class="hood-card">
-                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80');"></div>
-                    <span class="hood-name">Gopal hura </span>
-                </div>
-                <div class="hood-card">
-                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=200&q=80');"></div>
-                    <span class="hood-name">Mansarover</span>
-                </div>
-                <div class="hood-card">
-                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=200&q=80');"></div>
-                    <span class="hood-name">Malvinagar</span>
-                </div>
-                <div class="hood-card">
-                    <div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=200&q=80');"></div>
-                    <span class="hood-name">Chor bazar </span>
+    <div class="container">
+        <!-- Mystery Card -->
+        <div class="mystery-card">
+            <div class="image-container" id="clickableImage">
+                <!-- Faded image - replace with your image -->
+                <img src="123.png" 
+                     alt="Mystery Image" 
+                     class="faded-image"
+                     id="fadedImg">
+                
+                <!-- Click overlay text -->
+                <div class="click-overlay">
+                    <div class="finger-icon">👇</div>
+                    <h2>CLICK TO OPEN</h2>
+                    <p>a secret memory awaits...</p>
                 </div>
             </div>
+
+            <!-- Volume Requirement Indicator -->
+            <div class="volume-requirement">
+                <div class="volume-bar">
+                    <div class="volume-fill" id="volumeFill"></div>
+                </div>
+                <div class="volume-text">
+                    <span id="volumePercent">0%</span> volume required
+                </div>
+                
+                <!-- Volume Status -->
+                <div class="volume-status">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Volume too low</span>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="spinner" id="spinner"></div>
+
+            <!-- Mobile Instructions -->
+            <div class="instructions">
+                <div>📱 FOR BEST EXPERIENCE:</div>
+                <div>1. Turn volume to MAX</div>
+                <div>2. Click the faded image</div>
+                <div>3. Watch what happens...</div>
+            </div>
+
+            <div class="mobile-warning">
+                * Mobile optimized • Full volume required
+            </div>
         </div>
-
-        <!-- Trust Banner -->
-        <div class="trust-banner">
-            <div class="trust-item"><i class="fas fa-shield-alt"></i> 100% Verified Owners</div>
-            <div class="trust-item"><i class="fas fa-bolt"></i> Zero Brokerage Access</div>
-            <div class="trust-item"><i class="fas fa-key"></i> Instant Move-in Ready</div>
-        </div>
-
-        <!-- Market Insight -->
-        <div class="market-insight">
-            <div class="market-insight-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="market-insight-text">📈 Rents in <strong>Block 4</strong> have dropped by 5% this week. Great time to lock in a deal!</div>
-        </div>
-
-        <!-- Advanced Demographic Filters -->
-        <div class="filter-scroll" id="filterScroll">
-            <div class="filter-chip active" data-filter="all">All Homes</div>
-            <div class="filter-chip" data-filter="family"><i class="fas fa-users"></i> Family</div>
-            <div class="filter-chip" data-filter="bachelors"><i class="fas fa-user-friends"></i> Bachelors</div>
-            <div class="filter-chip" data-filter="girls"><i class="fas fa-female"></i> Girls Only</div>
-            <div class="filter-chip" data-filter="student"><i class="fas fa-book-reader"></i> Student</div>
-            <div class="filter-chip" data-filter="pg"><i class="fas fa-bed"></i> PG</div>
-            <div class="filter-chip" data-filter="assured"><i class="fas fa-crown" style="color:var(--gold)"></i> Zenzy Assured</div>
-            <div class="filter-chip" data-filter="brokerage"><i class="fas fa-bolt" style="color:#f59e0b"></i> No Brokerage</div>
-        </div>
-
-        <!-- Meta info -->
-        <div class="meta-header" id="resultsMeta">
-            <span id="resultCount">Searching...</span>
-            <button class="sort-btn" id="sortDropdown"><i class="fas fa-sort-amount-down"></i> Sort</button>
-        </div>
-
-        <!-- Vertical Property Grid -->
-        <div class="property-grid" id="propertyGrid"></div>
-
-    </main>
-
-    <!-- Floating Map Toggle -->
-    <button class="floating-map-btn" id="mapToggleBtn">
-        <span>Map View</span> <i class="fas fa-map"></i>
-    </button>
-
-    <!-- iOS Style Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item">
-            <i class="fas fa-compass"></i>
-            <span>Explore</span>
-        </a>
-        <a href="#" class="nav-item active">
-            <i class="fas fa-house-chimney"></i>
-            <span>Rent</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="far fa-heart"></i>
-            <span>Saved</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="far fa-user-circle"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
+    </div>
 
     <script>
-        (function() {
-            // ---------- DATA (Updated with Demographics) ----------
-            const properties = [
-                { id:1, title:"Independent Floor with Balcony", price:18500, type:"2 BHK", location:"Block 4, Metro Sector", beds:2, baths:2, sqft:950, verified:true, assured:true, brokerage:false, tags:["metro", "independent", "family", "bachelors"], 
-                  images:["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80"] },
-                { id:2, title:"Cozy Studio Apartment", price:12000, type:"1 BHK", location:"Block 2, Residency Greens", beds:1, baths:1, sqft:450, verified:false, assured:false, brokerage:true, tags:["studio", "student", "bachelors"], 
-                  images:["https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80"] },
-                { id:3, title:"Luxury Villa with Garden", price:45000, type:"3 BHK", location:"Zone A, Protocol Estates", beds:3, baths:3, sqft:2100, verified:true, assured:true, brokerage:false, tags:["premium","villa", "family"], 
-                  images:["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80"] },
-                { id:4, title:"Modern Furnished Apartment", price:24000, type:"2 BHK", location:"Block 7, Lake Vista", beds:2, baths:2, sqft:1120, verified:true, assured:false, brokerage:false, tags:["lake", "premium", "furnished", "family"], 
-                  images:["https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80"] },
-                { id:5, title:"Safe & Secure Girls PG", price:6500, type:"PG", location:"Block 5, Near University", beds:1, baths:1, sqft:null, verified:true, assured:true, brokerage:false, tags:["pg", "girls", "student", "furnished"], 
-                  images:["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"] },
-                { id:6, title:"Premium Boys PG Setup", price:7000, type:"PG", location:"Zone B, Metro Market", beds:1, baths:1, sqft:null, verified:true, assured:false, brokerage:false, tags:["pg", "bachelors", "student"], 
-                  images:["https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"] },
-                { id:7, title:"Spacious 3 BHK for Family", price:32000, type:"3 BHK", location:"Block 9, Green Park", beds:3, baths:3, sqft:1800, verified:true, assured:true, brokerage:true, tags:["family", "premium"], 
-                  images:["https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"] },
-                  { id:8, title:"Independent Floor with Balcony", price:7500, type:"2 BHK", location:"Gopalpura jaipur ", beds:2, baths:1, sqft:950, verified:false, assured:true, brokerage:false, tags:["bus", "independent", "family", "bachelors"], 
-                  images:["https://5.imimg.com/data5/KH/VW/GLADMIN-5593585/house-for-rent.jpg", "https://5.imimg.com/data5/KH/VW/GLADMIN-5593585/house-for-rent.jpg"] },
-                
-                  
-            ];
+        // Get elements
+        const audio = document.getElementById('prankAudio');
+        const clickableImage = document.getElementById('clickableImage');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+        const closeBtn = document.getElementById('closeBtn');
+        const volumeFill = document.getElementById('volumeFill');
+        const volumePercent = document.getElementById('volumePercent');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const spinner = document.getElementById('spinner');
+        const fadedImg = document.getElementById('fadedImg');
+        const revealedImg = document.getElementById('revealedImg');
 
-            // ---------- STATE & ELEMENTS ----------
-            let currentFilter = 'all', searchTerm = '';
+        // State variables
+        let audioStarted = false;
+        let currentVolume = 0;
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        let volumeCheckInterval;
+
+        // Set initial image (faded)
+        // You can replace these URLs with your own images
+        const fadedImageUrl = '123.png';
+        const revealImageUrl = 'c.png';
+        
+        fadedImg.src = fadedImageUrl;
+        revealedImg.src = revealImageUrl;
+
+        // Function to check volume on mobile
+        function checkMobileVolume() {
+            if (isMobile) {
+                // Create a test audio context to estimate volume
+                try {
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (window.AudioContext) {
+                        const audioContext = new AudioContext();
+                        const gainNode = audioContext.createGain();
+                        
+                        // This doesn't give exact volume but helps detect if audio is enabled
+                        if (audioContext.state === 'running') {
+                            // Audio is enabled, assume high volume
+                            updateVolumeUI(100);
+                        } else {
+                            // Audio might be muted or low
+                            updateVolumeUI(30);
+                        }
+                    }
+                } catch (e) {
+                    console.log('Could not check volume:', e);
+                }
+            }
+        }
+
+        // Update volume UI
+        function updateVolumeUI(percent) {
+            currentVolume = percent;
+            volumeFill.style.width = percent + '%';
+            volumePercent.textContent = percent;
             
-            const grid = document.getElementById('propertyGrid');
-            const searchInput = document.getElementById('searchInput');
-            const filterChips = document.querySelectorAll('.filter-chip');
-            const resultSpan = document.getElementById('resultCount');
-            const suggestionsBox = document.getElementById('suggestions');
-
-            // ---------- FUZZY SEARCH (Levenshtein Distance) ----------
-            function getEditDistance(a, b) {
-                if (a.length === 0) return b.length;
-                if (b.length === 0) return a.length;
-                const matrix = [];
-                for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-                for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-                for (let i = 1; i <= b.length; i++) {
-                    for (let j = 1; j <= a.length; j++) {
-                        if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                            matrix[i][j] = matrix[i - 1][j - 1];
-                        } else {
-                            matrix[i][j] = Math.min(
-                                matrix[i - 1][j - 1] + 1,
-                                Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1)
-                            );
-                        }
-                    }
-                }
-                return matrix[b.length][a.length];
+            if (percent >= 80) {
+                statusDot.className = 'status-dot ready';
+                statusText.textContent = '✓ Volume ready!';
+                statusText.style.color = '#00ff87';
+            } else {
+                statusDot.className = 'status-dot';
+                statusText.textContent = '⚠ Turn volume up';
+                statusText.style.color = 'rgba(255,255,255,0.5)';
             }
+        }
 
-            // ---------- RENDER LOGIC ----------
-            function filterProperties() {
-                return properties.filter(p => {
-                    // Check Chips Filters First
-                    if (currentFilter !== 'all') {
-                        if (currentFilter === 'assured' && !p.assured) return false;
-                        if (currentFilter === 'brokerage' && !p.brokerage) return false;
-                        if (['family', 'bachelors', 'girls', 'student', 'pg'].includes(currentFilter)) {
-                            if (!p.tags.includes(currentFilter)) return false;
-                        }
-                    }
-
-                    // Check Search with Fuzzy Tolerance
-                    if (searchTerm) {
-                        const term = searchTerm.toLowerCase().trim();
-                        const fullText = (p.title + " " + p.location + " " + p.tags.join(" ") + " " + p.type).toLowerCase();
-                        
-                        // Exact match
-                        if (fullText.includes(term)) return true;
-                        
-                        // Typo tolerance (Fuzzy Match) for tags/keywords if term is long enough
-                        if (term.length >= 4) {
-                            const isFuzzyMatch = p.tags.some(tag => getEditDistance(term, tag) <= 2) || 
-                                                 getEditDistance(term, p.type.toLowerCase()) <= 2;
-                            return isFuzzyMatch;
-                        }
-                        return false;
-                    }
-                    return true;
-                });
-            }
-
-            function render() {
-                const filtered = filterProperties();
-                resultSpan.innerHTML = `<strong>${filtered.length} homes</strong> found in your protocol`;
-
-                if (filtered.length === 0) {
-                    grid.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);"><i class="fas fa-search-minus" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i><p>No properties match your filters or search.</p></div>`;
-                    return;
-                }
-
-                let html = '';
-                filtered.forEach((p, idx) => {
-                    const isFav = localStorage.getItem(`fav_${p.id}`) === 'true';
-                    const assuredClass = p.assured ? 'assured' : '';
-                    
-                    let badge = p.assured ? `<div class="prop-badge assured"><i class="fas fa-crown"></i> Zenzy Assured</div>` 
-                              : (p.verified ? `<div class="prop-badge verified"><i class="fas fa-check-circle"></i> Verified</div>` 
-                              : (p.brokerage ? `<div class="prop-badge" style="color:var(--accent);">No Brokerage</div>` : ''));
-
-                    let slides = '', dots = '';
-                    p.images.forEach((img, i) => {
-                        slides += `<div class="prop-image-slide"><img src="${img}" alt="Property" loading="lazy"></div>`;
-                        dots += `<div class="dot ${i===0?'active':''}"></div>`;
-                    });
-
-                    // Add dynamic pills for demographic tags
-                    let specHTML = `<div class="spec-pill"><i class="fas fa-bed"></i> ${p.beds} Beds</div>
-                                    <div class="spec-pill"><i class="fas fa-bath"></i> ${p.baths} Baths</div>`;
-                    if(p.sqft) specHTML += `<div class="spec-pill"><i class="fas fa-vector-square"></i> ${p.sqft} sqft</div>`;
-                    if(p.tags.includes('family')) specHTML += `<div class="spec-pill" style="color:#0f766e; background:#ccfbf1;"><i class="fas fa-users"></i> Family</div>`;
-                    if(p.tags.includes('girls')) specHTML += `<div class="spec-pill" style="color:#be185d; background:#fce7f3;"><i class="fas fa-female"></i> Girls</div>`;
-                    if(p.tags.includes('bachelors') && !p.tags.includes('girls')) specHTML += `<div class="spec-pill" style="color:#1d4ed8; background:#dbeafe;"><i class="fas fa-user-friends"></i> Bachelors</div>`;
-
-                    html += `
-                    <article class="property-card ${assuredClass}" style="animation-delay: ${idx * 0.1}s">
-                        <div class="prop-image-wrapper">
-                            ${badge}
-                            <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${p.id}"><i class="${isFav?'fas':'far'} fa-heart"></i></button>
-                            <div class="prop-image-scroll" id="scroll-${p.id}">${slides}</div>
-                            <div class="carousel-dots" id="dots-${p.id}">${dots}</div>
-                        </div>
-                        <div class="prop-details">
-                            <div class="prop-price-row">
-                                <div class="prop-price">₹${p.price.toLocaleString()} <span>/mo</span></div>
-                                <div class="prop-type">${p.type}</div>
-                            </div>
-                            <h3 class="prop-title">${p.title}</h3>
-                            <div class="prop-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
-                            <div class="prop-specs">${specHTML}</div>
-                            <a href="#" class="view-btn">${p.assured ? 'View Assured Property' : 'View Details'}</a>
-                        </div>
-                    </article>`;
-                });
+        // Simulate volume detection (in real app, this would use native APIs)
+        // For demo, we'll increase volume when user clicks anywhere
+        function simulateVolumeIncrease() {
+            if (currentVolume < 100) {
+                let newVolume = Math.min(currentVolume + 20, 100);
+                updateVolumeUI(newVolume);
                 
-                grid.innerHTML = html;
-                attachListeners();
+                if (newVolume === 100) {
+                    statusText.textContent = '✓ Perfect! Ready to reveal';
+                }
             }
+        }
 
-            function triggerRender() {
-                grid.innerHTML = ''; 
-                setTimeout(render, 50);
-            }
-
-            // ---------- EVENT LISTENERS ----------
-            function attachListeners() {
-                document.querySelectorAll('.fav-btn').forEach(btn => {
-                    btn.onclick = function(e) {
-                        e.preventDefault();
-                        const id = this.dataset.id;
-                        const icon = this.querySelector('i');
-                        if (this.classList.toggle('active')) {
-                            icon.className = 'fas fa-heart';
-                            localStorage.setItem(`fav_${id}`, 'true');
-                        } else {
-                            icon.className = 'far fa-heart';
-                            localStorage.setItem(`fav_${id}`, 'false');
+        // Start audio function
+        function startAudio() {
+            if (!audioStarted) {
+                audio.volume = 1.0;
+                audio.play()
+                    .then(() => {
+                        audioStarted = true;
+                        console.log('Audio started - full volume');
+                        
+                        // Simulate volume increase on mobile when audio plays
+                        if (isMobile) {
+                            updateVolumeUI(100);
                         }
-                    };
-                });
-
-                properties.forEach(p => {
-                    const scroll = document.getElementById(`scroll-${p.id}`);
-                    const dotsWrap = document.getElementById(`dots-${p.id}`);
-                    if(!scroll || !dotsWrap) return;
-                    const dots = dotsWrap.querySelectorAll('.dot');
-                    
-                    scroll.onscroll = () => {
-                        const idx = Math.round(scroll.scrollLeft / scroll.clientWidth);
-                        dots.forEach((d, i) => d.className = `dot ${i===idx?'active':''}`);
-                    };
-                });
-            }
-
-            filterChips.forEach(chip => {
-                chip.onclick = function() {
-                    filterChips.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.filter;
-                    triggerRender();
-                };
-            });
-
-            // Handle Smart Search & Suggestions
-            searchInput.oninput = (e) => {
-                searchTerm = e.target.value.toLowerCase().trim();
-                
-                if (searchTerm.length > 2) {
-                    const keywords = ["metro", "studio", "premium", "villa", "furnished", "family", "bachelors", "girls", "student", "pg"];
-                    let matches = [];
-
-                    keywords.forEach(kw => {
-                        if (kw.includes(searchTerm)) {
-                            matches.push({ word: kw, exact: true });
-                        } else {
-                            // Suggest corrections for typos (e.g. "studi" -> "studio", "famly" -> "family")
-                            let distance = getEditDistance(searchTerm, kw);
-                            if (distance <= 2 && searchTerm.length >= 3) {
-                                matches.push({ word: kw, exact: false });
-                            }
+                    })
+                    .catch(error => {
+                        console.log('Audio play failed:', error);
+                        // On mobile, this might be due to low volume
+                        if (isMobile) {
+                            updateVolumeUI(30);
                         }
                     });
+            }
+        }
 
-                    if (matches.length > 0) {
-                        suggestionsBox.innerHTML = matches.slice(0, 4).map(m => 
-                            `<div>
-                                <i class="fas ${m.exact ? 'fa-search' : 'fa-magic'}"></i> 
-                                ${m.word} 
-                                ${!m.exact ? '<span style="margin-left:auto; font-size:0.7rem; color:var(--text-muted); background:var(--bg-main); padding:2px 6px; border-radius:4px;">Did you mean?</span>' : ''}
-                            </div>`
-                        ).join('');
-                        suggestionsBox.style.display = 'block';
-                    } else {
-                        suggestionsBox.style.display = 'none';
-                    }
-                } else {
-                    suggestionsBox.style.display = 'none';
-                }
-
-                clearTimeout(window.sTimeout);
-                window.sTimeout = setTimeout(triggerRender, 300);
-            };
-
-            suggestionsBox.onclick = (e) => {
-                const targetDiv = e.target.closest('div');
-                if(targetDiv) {
-                    // Extract text (remove 'Did you mean?' text if present)
-                    const clone = targetDiv.cloneNode(true);
-                    const span = clone.querySelector('span');
-                    if(span) span.remove();
+        // Show fullscreen image (only if volume is high enough)
+        function showFullscreenImage() {
+            if (currentVolume >= 80 || !isMobile) { // Desktop always works
+                spinner.style.display = 'block';
+                
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                    fullscreenImage.classList.add('show');
                     
-                    const text = clone.innerText.trim();
-                    searchInput.value = text;
-                    searchTerm = text;
-                    suggestionsBox.style.display = 'none';
-                    triggerRender();
+                    // Ensure audio is playing
+                    startAudio();
+                    
+                    // Try to go fullscreen on mobile
+                    if (isMobile && document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    }
+                }, 500);
+            } else {
+                // Show warning
+                alert('⚠️ Please turn up your device volume to max first!');
+                
+                // Vibrate on mobile if supported
+                if (isMobile && navigator.vibrate) {
+                    navigator.vibrate(200);
                 }
-            };
+            }
+        }
 
-            // Close suggestions when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-                    suggestionsBox.style.display = 'none';
+        // Event Listeners
+
+        // Click on image
+        clickableImage.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Simulate volume increase on each click
+            simulateVolumeIncrease();
+            
+            // Show the fullscreen image if volume is ready
+            showFullscreenImage();
+            
+            // Start audio
+            startAudio();
+            
+            // Add haptic feedback on mobile
+            if (isMobile && navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
+
+        // Close fullscreen
+        closeBtn.addEventListener('click', function() {
+            fullscreenImage.classList.remove('show');
+            
+            // Exit fullscreen if active
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+
+        // Click anywhere on fullscreen to close (optional)
+        fullscreenImage.addEventListener('click', function(e) {
+            if (e.target === fullscreenImage) {
+                closeBtn.click();
+            }
+        });
+
+        // Global click handler for audio
+        document.addEventListener('click', function() {
+            startAudio();
+            simulateVolumeIncrease();
+        });
+
+        // Touch events for mobile
+        document.addEventListener('touchstart', function() {
+            startAudio();
+            simulateVolumeIncrease();
+        }, { passive: true });
+
+        // Volume detection for mobile
+        if (isMobile) {
+            // Check volume periodically
+            volumeCheckInterval = setInterval(() => {
+                // This is a simulation - in reality, you'd need a native app to detect exact volume
+                // But for prank purposes, we'll assume volume increases with interaction
+                if (audioStarted) {
+                    updateVolumeUI(100);
                 }
+            }, 1000);
+
+            // Detect if ringer mode changes (iOS)
+            document.addEventListener('volumechange', function() {
+                updateVolumeUI(100);
             });
+        } else {
+            // Desktop - always show full volume
+            updateVolumeUI(100);
+        }
 
-            // Init
-            triggerRender();
-        })();
+        // Secret way to reset (for you) - press Ctrl+Shift+R
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+                audio.pause();
+                audio.currentTime = 0;
+                audioStarted = false;
+                updateVolumeUI(0);
+                fullscreenImage.classList.remove('show');
+                console.log('Reset prank');
+            }
+        });
+
+        // Handle fullscreen change
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                // Optional: do something when exiting fullscreen
+            }
+        });
+
+        // Preload images
+        function preloadImages() {
+            const img1 = new Image();
+            img1.src = fadedImageUrl;
+            const img2 = new Image();
+            img2.src = revealImageUrl;
+        }
+        preloadImages();
+
+        // Handle page visibility
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Optional: pause when tab hidden
+            }
+        });
+
+        // Clean up
+        window.addEventListener('beforeunload', function() {
+            if (volumeCheckInterval) {
+                clearInterval(volumeCheckInterval);
+            }
+        });
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
 
 
