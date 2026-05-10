@@ -55,16 +55,17 @@
             transform: translateY(0);
         }
 
-        /* ----- REDESIGNED HEADER: clean, bold, no background bulk ----- */
+        /* ----- REDESIGNED HEADER ----- */
         .header {
-            background: transparent;  /* no solid bar, just minimal border */
+            background: transparent;
             padding: 0.9rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(100, 116, 139, 0.12); /* subtle separation */
-            backdrop-filter: none; /* removed heavy blur */
+            border-bottom: 1px solid rgba(100, 116, 139, 0.12);
+            backdrop-filter: blur(10px);
+            background: rgba(248, 250, 252, 0.8);
         }
 
         .header-container {
@@ -76,7 +77,6 @@
             gap: 2rem;
         }
 
-        /* --- Bold Logo (no background) --- */
         .brand-wrapper {
             text-decoration: none;
             display: inline-flex;
@@ -109,31 +109,12 @@
             50% { transform: scale(1.5); opacity: 1; box-shadow: 0 0 15px var(--primary); }
         }
 
-        /* The small branch tag – lighter */
-        .admin-micro {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(15, 23, 42, 0.03);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-            margin-left: 8px;
-        }
-        .admin-micro i {
-            color: var(--primary);
-            font-size: 0.7rem;
-        }
-
-        /* --- inline navigation (still same pill but without background around it) --- */
+        /* --- inline navigation --- */
         .nav-links {
             display: flex;
             gap: 0.2rem;
             align-items: center;
-            background: white;          /* kept the pill for the links, but header background is gone */
+            background: white;
             padding: 0.3rem;
             border-radius: 100px;
             border: 1px solid var(--border);
@@ -164,7 +145,6 @@
             background: #eef2ff;
         }
 
-        /* special rotating border button (unchanged) */
         .nav-links a.special {
             position: relative;
             background: var(--secondary);
@@ -212,7 +192,6 @@
             transform: scale(1.05);
         }
 
-        /* --- User action icons: clean minimal --- */
         .user-actions {
             display: flex;
             gap: 8px;
@@ -239,7 +218,7 @@
             box-shadow: 0 8px 18px -6px rgba(37,99,235,0.2);
         }
 
-        /* ----- Hero Section (unchanged) ----- */
+        /* ----- Hero Section ----- */
         .hero {
             padding: 1.5rem 2rem;
             max-width: 1440px;
@@ -306,7 +285,7 @@
             font-weight: 500;
         }
 
-        /* ----- Compact Promotional Scroller (unchanged) ----- */
+        /* ----- Compact Promotional Scroller ----- */
         .promo-section {
             padding: 2rem 0;
             max-width: 1440px;
@@ -399,7 +378,7 @@
             margin-top: -10px;
         }
 
-        /* ----- Filters, categories, etc (all unchanged) ----- */
+        /* ----- Filters & Sections ----- */
         .filters-section {
             padding: 0.5rem 2rem;
             max-width: 1440px;
@@ -472,6 +451,8 @@
             letter-spacing: -0.03em;
             color: var(--secondary);
         }
+        
+        /* Category Grid */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -485,6 +466,9 @@
             border: 1px solid var(--border);
             transition: all 0.3s ease;
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .category-card:hover {
             transform: translateY(-5px);
@@ -498,6 +482,8 @@
         }
         .category-card h3 { font-size: 0.95rem; font-weight: 700; }
         .category-card p { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Trending Grid */
         .trending-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -512,6 +498,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            min-height: 380px;
         }
         .pro-card:hover {
             transform: translateY(-8px);
@@ -590,12 +577,102 @@
             gap: 10px;
             transition: all 0.3s;
             margin-top: auto;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
         .book-btn:hover {
             background: var(--primary);
             gap: 15px;
             transform: scale(1.02);
         }
+
+        /* --- UI Loaders --- */
+        .loading-skeleton {
+            background: #e2e8f0;
+            border-radius: 12px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+
+        /* --- Modals and Toasts --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title { font-size: 1.5rem; font-weight: 800; color: var(--secondary); }
+        .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+        
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--secondary); margin-bottom: 6px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+        
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+            z-index: 3000;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.show { bottom: 30px; }
+
+        /* Motive & Footer (Unchanged structure) */
         .motive-section {
             background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 80%);
             border-radius: 50px;
@@ -636,10 +713,7 @@
             min-width: 120px;
             animation: float 6s infinite ease-in-out;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--secondary); display: block; }
         .stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
         .sub-banner {
@@ -667,12 +741,7 @@
             gap: 4rem;
             margin-bottom: 3rem;
         }
-        .footer-logo-col h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
-        }
+        .footer-logo-col h2 { font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1rem; }
         .footer-logo-col .dot { display: inline-block; width: 12px; height: 12px; background: var(--primary); border-radius: 50%; margin-left: 5px; }
         .social-links { display: flex; gap: 1rem; margin: 1.5rem 0; }
         .social-icon {
@@ -680,12 +749,8 @@
             height: 44px;
             background: #1d3a50;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none; transition: all 0.3s;
         }
         .social-icon:hover { background: var(--primary); transform: translateY(-5px); }
         .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; border-bottom: 2px solid #2f5577; display: inline-block; padding-bottom: 5px; }
@@ -694,15 +759,8 @@
         .footer-col a { color: #bed6ec; text-decoration: none; transition: all 0.2s; }
         .footer-col a:hover { color: white; padding-left: 10px; }
         .footer-bottom {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid #264a63;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            opacity: 0.7;
+            max-width: 1440px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid #264a63;
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; opacity: 0.7;
         }
         @media (max-width: 900px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -714,17 +772,15 @@
 </head>
 <body>
 
-    <!-- REDESIGNED HEADER: clean, no heavy background, only bold logo and buttons area -->
+    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <div style="display: flex; align-items: center; gap: 20px;">
                 <a href="#" class="brand-wrapper">
                     <span class="brand">zenzy<span class="brand-dot"></span></span>
                 </a>
-              
             </div>
 
-            <!-- Upgraded Navigation Pill (same as before) -->
             <nav class="nav-links">
                 <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
                 <a href="#services"><i class="fas fa-th-large"></i> Services</a>
@@ -740,11 +796,10 @@
         </div>
     </header>
 
-    <!-- Hero Section (Auto Sliding) -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="slideshow-container">
             <div class="slide-track">
-                <!-- Slide 1 -->
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581244276823-86f7a47ef6c0?auto=format&fit=crop&w=1600&q=80');">
                     <div class="slide-content">
                         <h2><span class="slide-badge"><i class="fas fa-bolt"></i> Protocol Alpha</span></h2>
@@ -752,7 +807,6 @@
                         <p>900+ Verified Professionals available in your block. Instant response guaranteed by protocol.</p>
                     </div>
                 </div>
-                <!-- Slide 2 -->
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1589939705384-5185138a04b9?auto=format&fit=crop&w=1600&q=80');">
                     <div class="slide-content">
                         <h2><span class="slide-badge"><i class="fas fa-paint-roller"></i> Protocol Beta</span></h2>
@@ -760,7 +814,6 @@
                         <p>Contractors, Beldars, and Master Painters. High-end finishes protocol-vetted for your home.</p>
                     </div>
                 </div>
-                <!-- Slide 3 -->
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80');">
                     <div class="slide-content">
                         <h2><span class="slide-badge"><i class="fas fa-home"></i> Protocol Gamma</span></h2>
@@ -771,90 +824,26 @@
             </div>
         </div>
     </section>
-    <!-- Compact Promotional Scroller -->
-<section class="promo-section reveal">
-    <div class="section-header" style="padding-left: 2rem;">
-        <i class="fas fa-wand-magic-sparkles"></i>
-        <h2 class="section-title">Exclusive Protocols</h2>
-    </div>
 
-    <div class="promo-wrapper">
-        <!-- Card 1 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge">Popular</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Deep Cleaning Plus</h3>
-                <p class="promo-subtitle">Full villa sanitation protocol</p>
-            </div>
+    <!-- Dynamic Promo Scroller -->
+    <section class="promo-section reveal">
+        <div class="section-header" style="padding-left: 2rem;">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <h2 class="section-title">Exclusive Protocols</h2>
         </div>
-
-        <!-- Card 2 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge" style="background: #e0f0ea; color: #0f4e3a;">Safety</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Wire-Safe Audit</h3>
-                <p class="promo-subtitle">Whole house electrical health check</p>
-            </div>
+        <div class="promo-wrapper" id="promo-container">
+            <!-- Skeletons while loading -->
+            <div class="promo-card loading-skeleton"></div>
+            <div class="promo-card loading-skeleton"></div>
+            <div class="promo-card loading-skeleton"></div>
         </div>
-
-        <!-- Card 3 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15224bbaf41?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge" style="background: #fee2e2; color: #991b1b;">Emergency</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Flash Plumbing</h3>
-                <p class="promo-subtitle">Under 30-min response time</p>
-            </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-arrow-right"></i> Swipe for more protocols
         </div>
+    </section>
 
-        <!-- Card 4 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge">Design</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Modular Kitchens</h3>
-                <p class="promo-subtitle">Consult with Zenzy Architects</p>
-            </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1590001158193-790130e8e911?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge">Vetted</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Senior Beldars</h3>
-                <p class="promo-subtitle">Master masons for renovation</p>
-            </div>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="promo-card">
-            <div class="promo-bg" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80');"></div>
-            <div class="promo-overlay"></div>
-            <span class="promo-badge" style="background: #eff6ff; color: #1e40af;">New</span>
-            <div class="promo-content">
-                <h3 class="promo-title">Smart Home Setup</h3>
-                <p class="promo-subtitle">CCTV and IoT integration</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="scroll-indicator">
-        <i class="fas fa-arrow-right"></i> Swipe for more protocols
-    </div>
-</section>
-
-    <!-- Protocol Info Bar -->
     <div class="branch-info-bar reveal">
         <span><i class="fas fa-diagram-project"></i> For you For the Trust </span>
-       
     </div>
 
     <!-- Filters -->
@@ -869,31 +858,22 @@
         </div>
     </section>
 
-    <!-- Categories -->
+    <!-- Dynamic Categories -->
     <section class="section-container reveal" id="services">
         <div class="section-header">
             <i class="fas fa-th"></i>
-            <h2 class="section-title">Our Serivices </h2>
+            <h2 class="section-title">Our Services</h2>
         </div>
-        <div class="category-grid">
-            <div class="category-card"><i class="fas fa-wrench category-icon"></i><h3>Plumbing</h3><p>187 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-bolt category-icon"></i><h3>Electrician</h3><p>142 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-paint-roller category-icon"></i><h3>Painting</h3><p>93 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-wind category-icon"></i><h3>AC Service</h3><p>61 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-trowel category-icon"></i><h3>Beldar / Mason</h3><p>34 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-hard-hat category-icon"></i><h3>Contractor</h3><p>48 zenzys</p></div>
-           <a href="houserent.html" style="text-decoration:none;color:inherit;"><div class="category-card"><i class="fas fa-home category-icon"></i><h3>House Rent</h3><p>112 listings</p></div></a>
-            <div class="category-card"><i class="fas fa-building category-icon"></i><h3>Property Sale</h3><p>76 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-draw-polygon category-icon"></i><h3>Architect</h3><p>28 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-mountain category-icon"></i><h3>Stone Worker</h3><p>19 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-car-side category-icon"></i><h3>Car Cleaning</h3><p>27 zenzys</p></div>
-            <div class="category-card"><i class="fas fa-tools category-icon"></i><h3>Thekedar</h3><p>15 groups</p></div>
-            <div class="category-card"><i class="fas fa-broom category-icon"></i><h3>House Worker</h3><p>62 helpers</p></div>
-            <div class="category-card"><i class="fas fa-question category-icon"></i><h3>Mystery</h3><p>Special ops</p></div>
+        <div class="category-grid" id="category-container">
+            <!-- Loaders -->
+            <div class="category-card loading-skeleton" style="height: 140px;"></div>
+            <div class="category-card loading-skeleton" style="height: 140px;"></div>
+            <div class="category-card loading-skeleton" style="height: 140px;"></div>
+            <div class="category-card loading-skeleton" style="height: 140px;"></div>
         </div>
     </section>
 
-    <!-- Trending Pros -->
+    <!-- Dynamic Trending Pros -->
     <section class="section-container reveal" style="background: #f1f5f9; border-radius: 50px; margin: 2rem auto; max-width: 1400px;">
         <div class="section-header" style="justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 15px;">
@@ -902,102 +882,11 @@
             </div>
             <a href="#" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.85rem;">See All <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div class="trending-grid">
-            <!-- Pro 1 -->
-            <div class="pro-card">
-                <div class="pro-img-wrapper">
-                    <div class="pro-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), transparent), url('https://images.unsplash.com/photo-1595814433015-e6f5cd696144?auto=format&fit=crop&w=600&q=80');"></div>
-                    <span class="pro-work-badge"><i class="fas fa-wrench"></i> plumbing</span>
-                    <span class="pro-img-count"><i class="far fa-image"></i> 12</span>
-                </div>
-                <div class="pro-info">
-                    <div class="pro-name-row">
-                        <h4 class="pro-name">R.K. Plumbing</h4>
-                        <span class="pro-verified"><i class="fas fa-check-circle"></i> verified</span>
-                    </div>
-                    <div class="pro-rating-row">
-                        <span class="stars">★★★★★</span>
-                        <span class="reviews">(312 reviews)</span>
-                    </div>
-                    <div class="pro-meta-row">
-                        <span class="pro-price">₹350 /hr</span>
-                        <span class="pro-dist"><i class="fas fa-map-pin"></i> 0.6 km</span>
-                    </div>
-                    <a href="#" class="book-btn">Book Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Pro 2 -->
-            <div class="pro-card">
-                <div class="pro-img-wrapper">
-                    <div class="pro-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), transparent), url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80');"></div>
-                    <span class="pro-work-badge"><i class="fas fa-bolt"></i> electrics</span>
-                    <span class="pro-img-count"><i class="far fa-image"></i> 9</span>
-                </div>
-                <div class="pro-info">
-                    <div class="pro-name-row">
-                        <h4 class="pro-name">Zen Electrics</h4>
-                        <span class="pro-verified" style="background:#e0f0ea; color:#0f4e3a;">pro pro</span>
-                    </div>
-                    <div class="pro-rating-row">
-                        <span class="stars">★★★★☆</span>
-                        <span class="reviews">(207 reviews)</span>
-                    </div>
-                    <div class="pro-meta-row">
-                        <span class="pro-price">₹420 /fix</span>
-                        <span class="pro-dist"><i class="fas fa-map-pin"></i> 1.1 km</span>
-                    </div>
-                    <a href="#" class="book-btn">Book Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Pro 3 -->
-            <div class="pro-card">
-                <div class="pro-img-wrapper">
-                    <div class="pro-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), transparent), url('https://images.unsplash.com/photo-1558979158-65a1eaa14271?auto=format&fit=crop&w=600&q=80');"></div>
-                    <span class="pro-work-badge"><i class="fas fa-snowflake"></i> AC repair</span>
-                    <span class="pro-img-count"><i class="far fa-image"></i> 22</span>
-                </div>
-                <div class="pro-info">
-                    <div class="pro-name-row">
-                        <h4 class="pro-name">Cooldude AC</h4>
-                        <span class="pro-verified"><i class="fas fa-medal"></i> elite</span>
-                    </div>
-                    <div class="pro-rating-row">
-                        <span class="stars">★★★★★</span>
-                        <span class="reviews">(431 reviews)</span>
-                    </div>
-                    <div class="pro-meta-row">
-                        <span class="pro-price">₹399 /svc</span>
-                        <span class="pro-dist"><i class="fas fa-map-pin"></i> 2.3 km</span>
-                    </div>
-                    <a href="#" class="book-btn">Book Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Pro 4 -->
-            <div class="pro-card">
-                <div class="pro-img-wrapper">
-                    <div class="pro-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), transparent), url('https://images.unsplash.com/photo-1562259946-08c5475d8d61?auto=format&fit=crop&w=600&q=80');"></div>
-                    <span class="pro-work-badge"><i class="fas fa-paint-roller"></i> painting</span>
-                    <span class="pro-img-count"><i class="far fa-image"></i> 17</span>
-                </div>
-                <div class="pro-info">
-                    <div class="pro-name-row">
-                        <h4 class="pro-name">Asian Paints Pro</h4>
-                        <span class="pro-verified">⭐ top pro</span>
-                    </div>
-                    <div class="pro-rating-row">
-                        <span class="stars">★★★★☆</span>
-                        <span class="reviews">(95 reviews)</span>
-                    </div>
-                    <div class="pro-meta-row">
-                        <span class="pro-price">₹1.8k /rm</span>
-                        <span class="pro-dist"><i class="fas fa-map-pin"></i> 0.3 km</span>
-                    </div>
-                    <a href="#" class="book-btn">Book Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+        <div class="trending-grid" id="pros-container">
+            <!-- Loaders -->
+            <div class="pro-card loading-skeleton"></div>
+            <div class="pro-card loading-skeleton"></div>
+            <div class="pro-card loading-skeleton"></div>
         </div>
     </section>
 
@@ -1024,10 +913,10 @@
             <i class="fas fa-crown" style="font-size: 1.5rem; color: #f4b740;"></i>
             <span style="font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em;">SUBSCRIPTIONS · ZERO FEES · PRIORITY SUPPORT</span>
         </div>
-        <span style="background: rgba(255,255,255,0.2); padding: 5px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem;">Comming Soon</span>
+        <span style="background: rgba(255,255,255,0.2); padding: 5px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem;">Coming Soon</span>
     </div>
 
-    <!-- Creative Footer -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-logo-col">
@@ -1070,24 +959,289 @@
         </div>
         <div class="footer-bottom">
             <div>© 2026 Zenzy Technologies </div>
-             <div>© All rights reserver </div>
+            <div>© All rights reserved </div>
             <div style="display: flex; gap: 10px; align-items: center; background: #153145; padding: 5px 20px; border-radius: 40px; border: 1px solid #3b6385;">
                 <i class="fas fa-diagram-project"></i> Designed and developed by ISHANT UPADHYAY
             </div>
         </div>
     </footer>
 
-    <script>
-        // Scroll Reveal Logic
-        const revealElements = document.querySelectorAll('.reveal');
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Request Service</h3>
+                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Booking: <strong id="modalProName" style="color: var(--secondary);">Pro Name</strong></p>
+            
+            <form id="bookingForm">
+                <input type="hidden" id="modalProId">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="customerName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="customerPhone" required placeholder="+91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label>Block / Address Details</label>
+                    <textarea id="customerAddress" required rows="3" placeholder="Block 4, Villa 12..."></textarea>
+                </div>
+                <button type="submit" class="book-btn" style="padding: 1rem; font-size: 1rem;">Confirm Booking Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i> <span id="toastMsg">Request sent successfully!</span>
+    </div>
+
+    <!-- Firebase SDK Setup -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your provided API Keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGmSHiSFvlOIk5woSsbBLI5rndASromyg",
+            authDomain: "dmin-dbe58.firebaseapp.com",
+            projectId: "dmin-dbe58",
+            storageBucket: "dmin-dbe58.firebasestorage.app",
+            messagingSenderId: "369190320724",
+            appId: "1:369190320724:web:29a949f473c557d63d4bc1",
+            measurementId: "G-ZE2EEQC2WM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Security implementation: Dynamic App ID support to ensure DB strict rules
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'zenzy_main_app';
         
+        // Helper func to format paths following strict requirements
+        const getCol = (name) => collection(db, 'artifacts', appId, 'public', 'data', name);
+
+        let currentUser = null;
+
+        // Initialize App & Auth First
+        const initApp = async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Auth error:", error);
+            }
+        };
+
+        // Listen for Auth State changes to load data safely
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                await seedDatabaseIfEmpty(); // Smart seeding mechanism
+                setupRealtimeListeners();
+            }
+        });
+
+        initApp();
+
+        // -------------------------------------------------------------
+        // SEED DATA: Auto-populates your blank database so it's ready!
+        // -------------------------------------------------------------
+        const seedDatabaseIfEmpty = async () => {
+            const prosRef = getCol('zenzy_pros');
+            const catRef = getCol('zenzy_categories');
+            const promoRef = getCol('zenzy_promos');
+
+            const [prosSnap, catSnap, promoSnap] = await Promise.all([
+                getDocs(prosRef), getDocs(catRef), getDocs(promoRef)
+            ]);
+
+            // If empty, upload the default website data
+            if (prosSnap.empty) {
+                const defaultPros = [
+                    { name: "R.K. Plumbing", badgeIcon: "fas fa-wrench", badgeText: "plumbing", imagesCount: 12, bgImage: "https://images.unsplash.com/photo-1595814433015-e6f5cd696144?auto=format&fit=crop&w=600&q=80", verifiedText: "verified", verifiedIcon: "fas fa-check-circle", stars: "★★★★★", reviews: 312, price: "₹350 /hr", distance: "0.6 km" },
+                    { name: "Zen Electrics", badgeIcon: "fas fa-bolt", badgeText: "electrics", imagesCount: 9, bgImage: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", verifiedText: "pro pro", verifiedIcon: "", stars: "★★★★☆", reviews: 207, price: "₹420 /fix", distance: "1.1 km", verifiedStyle: "background:#e0f0ea; color:#0f4e3a;" },
+                    { name: "Cooldude AC", badgeIcon: "fas fa-snowflake", badgeText: "AC repair", imagesCount: 22, bgImage: "https://images.unsplash.com/photo-1558979158-65a1eaa14271?auto=format&fit=crop&w=600&q=80", verifiedText: "elite", verifiedIcon: "fas fa-medal", stars: "★★★★★", reviews: 431, price: "₹399 /svc", distance: "2.3 km" },
+                    { name: "Asian Paints Pro", badgeIcon: "fas fa-paint-roller", badgeText: "painting", imagesCount: 17, bgImage: "https://images.unsplash.com/photo-1562259946-08c5475d8d61?auto=format&fit=crop&w=600&q=80", verifiedText: "top pro", verifiedIcon: "⭐", stars: "★★★★☆", reviews: 95, price: "₹1.8k /rm", distance: "0.3 km" }
+                ];
+                defaultPros.forEach(p => addDoc(prosRef, p));
+            }
+
+            if (catSnap.empty) {
+                const defaultCats = [
+                    { name: "Plumbing", icon: "fas fa-wrench", count: "187 zenzys", link: "#" },
+                    { name: "Electrician", icon: "fas fa-bolt", count: "142 zenzys", link: "#" },
+                    { name: "Painting", icon: "fas fa-paint-roller", count: "93 zenzys", link: "#" },
+                    { name: "AC Service", icon: "fas fa-wind", count: "61 zenzys", link: "#" },
+                    { name: "Beldar / Mason", icon: "fas fa-trowel", count: "34 zenzys", link: "#" },
+                    { name: "Contractor", icon: "fas fa-hard-hat", count: "48 zenzys", link: "#" },
+                    { name: "House Rent", icon: "fas fa-home", count: "112 listings", link: "houserent.html" },
+                    { name: "Property Sale", icon: "fas fa-building", count: "76 zenzys", link: "#" },
+                    { name: "Architect", icon: "fas fa-draw-polygon", count: "28 zenzys", link: "#" },
+                    { name: "House Worker", icon: "fas fa-broom", count: "62 helpers", link: "#" },
+                ];
+                defaultCats.forEach(c => addDoc(catRef, c));
+            }
+
+            if (promoSnap.empty) {
+                const defaultPromos = [
+                    { title: "Deep Cleaning Plus", subtitle: "Full villa sanitation protocol", badge: "Popular", bg: "https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Wire-Safe Audit", subtitle: "Whole house electrical health check", badge: "Safety", bg: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", badgeStyle: "background: #e0f0ea; color: #0f4e3a;" },
+                    { title: "Flash Plumbing", subtitle: "Under 30-min response time", badge: "Emergency", bg: "https://images.unsplash.com/photo-1556911220-e15224bbaf41?auto=format&fit=crop&w=600&q=80", badgeStyle: "background: #fee2e2; color: #991b1b;" },
+                    { title: "Modular Kitchens", subtitle: "Consult with Zenzy Architects", badge: "Design", bg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" }
+                ];
+                defaultPromos.forEach(p => addDoc(promoRef, p));
+            }
+        };
+
+        // -------------------------------------------------------------
+        // REALTIME LISTENERS: Fetches and displays data live
+        // -------------------------------------------------------------
+        const setupRealtimeListeners = () => {
+            if(!currentUser) return;
+
+            // 1. Listen to Categories
+            onSnapshot(getCol('zenzy_categories'), (snapshot) => {
+                const container = document.getElementById('category-container');
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    container.innerHTML += `
+                        <a href="${data.link || '#'}" class="category-card">
+                            <i class="${data.icon} category-icon"></i>
+                            <h3>${data.name}</h3>
+                            <p>${data.count}</p>
+                        </a>
+                    `;
+                });
+            }, (err) => console.error("Error fetching categories:", err));
+
+            // 2. Listen to Promos
+            onSnapshot(getCol('zenzy_promos'), (snapshot) => {
+                const container = document.getElementById('promo-container');
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    container.innerHTML += `
+                        <div class="promo-card">
+                            <div class="promo-bg" style="background-image: url('${data.bg}');"></div>
+                            <div class="promo-overlay"></div>
+                            <span class="promo-badge" style="${data.badgeStyle || ''}">${data.badge}</span>
+                            <div class="promo-content">
+                                <h3 class="promo-title">${data.title}</h3>
+                                <p class="promo-subtitle">${data.subtitle}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }, (err) => console.error("Error fetching promos:", err));
+
+            // 3. Listen to Trending Pros
+            onSnapshot(getCol('zenzy_pros'), (snapshot) => {
+                const container = document.getElementById('pros-container');
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    container.innerHTML += `
+                        <div class="pro-card">
+                            <div class="pro-img-wrapper">
+                                <div class="pro-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), transparent), url('${data.bgImage}');"></div>
+                                <span class="pro-work-badge"><i class="${data.badgeIcon}"></i> ${data.badgeText}</span>
+                                <span class="pro-img-count"><i class="far fa-image"></i> ${data.imagesCount}</span>
+                            </div>
+                            <div class="pro-info">
+                                <div class="pro-name-row">
+                                    <h4 class="pro-name">${data.name}</h4>
+                                    <span class="pro-verified" style="${data.verifiedStyle || ''}"><i class="${data.verifiedIcon}"></i> ${data.verifiedText}</span>
+                                </div>
+                                <div class="pro-rating-row">
+                                    <span class="stars">${data.stars}</span>
+                                    <span class="reviews">(${data.reviews} reviews)</span>
+                                </div>
+                                <div class="pro-meta-row">
+                                    <span class="pro-price">${data.price}</span>
+                                    <span class="pro-dist"><i class="fas fa-map-pin"></i> ${data.distance}</span>
+                                </div>
+                                <button onclick="window.openModal('${id}', '${data.name.replace(/'/g, "\\'")}')" class="book-btn">Book Now <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }, (err) => console.error("Error fetching pros:", err));
+        };
+
+        // -------------------------------------------------------------
+        // BOOKING SYSTEM (Writing to Firebase for Admin Panel)
+        // -------------------------------------------------------------
+        window.openModal = (proId, proName) => {
+            document.getElementById('modalProId').value = proId;
+            document.getElementById('modalProName').innerText = proName;
+            document.getElementById('bookingModal').classList.add('active');
+        };
+
+        window.closeModal = () => {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.getElementById('bookingForm').reset();
+        };
+
+        window.showToast = (message) => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        };
+
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!currentUser) {
+                alert("Authenticating... please wait a second.");
+                return;
+            }
+
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending Request...";
+            btn.disabled = true;
+
+            const requestData = {
+                proId: document.getElementById('modalProId').value,
+                proName: document.getElementById('modalProName').innerText,
+                customerName: document.getElementById('customerName').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerAddress: document.getElementById('customerAddress').value,
+                status: "Pending",
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                // Save to booking requests collection (Admin Panel will read this)
+                await addDoc(getCol('zenzy_booking_requests'), requestData);
+                closeModal();
+                showToast("Request sent! Admin will contact you shortly.");
+            } catch (error) {
+                console.error("Booking error:", error);
+                alert("Failed to send request. Please try again.");
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+    </script>
+
+    <script>
+        // Animations and UI logic (No Firebase logic here)
+        const revealElements = document.querySelectorAll('.reveal');
         const revealOnScroll = () => {
             for (let i = 0; i < revealElements.length; i++) {
                 const windowHeight = window.innerHeight;
                 const elementTop = revealElements[i].getBoundingClientRect().top;
-                const elementVisible = 80;
-                
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 80) {
                     revealElements[i].classList.add('active');
                 }
             }
@@ -1096,7 +1250,6 @@
         window.addEventListener('scroll', revealOnScroll);
         window.onload = revealOnScroll;
 
-        // Header Scroll Animation (still works with transparent)
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.header');
@@ -1106,7 +1259,7 @@
                 header.style.top = '-100px';
             } else {
                 header.style.top = '0';
-                header.style.boxShadow = currentScroll > 50 ? '0 4px 12px rgba(0,0,0,0.02)' : 'none';
+                header.style.boxShadow = currentScroll > 50 ? '0 4px 12px rgba(0,0,0,0.05)' : 'none';
             }
             lastScroll = currentScroll;
         });
