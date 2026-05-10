@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zenzy Rent · Premium Real Estate</title>
+
+    <link rel="icon" type="image/png" href="zzz.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #eff6ff;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --gold: #f59e0b;
+            --bg-main: #f4f7fb;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 8px 30px rgba(15, 23, 42, 0.12);
+            --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.5; overflow-x: hidden; scroll-behavior: smooth; padding-bottom: 90px; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        @keyframes pulseDot { 0% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); background-color: var(--primary); } 100% { opacity: 0.6; transform: scale(1); } }
+
+        /* Header */
+        .header { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(226, 232, 240, 0.5); padding: 0.8rem 1.5rem; position: sticky; top: 0; z-index: 1000; transition: all 0.3s ease; }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .brand-wrapper { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand { font-weight: 800; font-size: 1.6rem; letter-spacing: -0.04em; color: var(--secondary); display: flex; align-items: center; }
+        .brand-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-left: 2px; box-shadow: 0 0 12px var(--primary); animation: pulseDot 2s infinite; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; transition: all 0.2s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 50%; background: var(--primary); border-radius: 10px; transition: all 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--secondary); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; left: 0; }
+        .user-actions { display: flex; gap: 0.8rem; align-items: center; }
+        .icon-btn { width: 40px; height: 40px; background: white; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--secondary); font-size: 1.1rem; }
+        .icon-btn:hover { transform: scale(1.1); border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow-sm); }
+        .back-btn { color: var(--text-muted); font-size: 1.2rem; margin-right: 0.5rem; transition: all 0.2s; text-decoration: none; }
+        .back-btn:hover { color: var(--secondary); transform: translateX(-3px); }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 1rem 1.2rem; position: relative; }
+
+        /* Search */
+        .search-wrapper { background: var(--bg-card); border-radius: 100px; padding: 6px 6px 6px 20px; display: flex; align-items: center; box-shadow: var(--shadow-subtle); border: 1px solid var(--border); margin-bottom: 1.2rem; transition: box-shadow 0.3s; position: relative; }
+        .search-wrapper:focus-within { box-shadow: 0 0 0 3px var(--primary-light); border-color: var(--primary); }
+        .search-wrapper i.fa-search { color: var(--primary); font-size: 1.1rem; }
+        .search-wrapper input { flex-grow: 1; border: none; outline: none; padding: 0.8rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--secondary); background: transparent; }
+        .locate-btn { background: var(--bg-main); color: var(--secondary); border: none; border-radius: 100px; padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
+        .locate-btn.active { background: var(--primary); color: white; }
+        .suggestions-box { position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-float); border: 1px solid var(--border); overflow: hidden; display: none; z-index: 1000; }
+        .suggestions-box div { padding: 1rem 1.5rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--bg-main); cursor: pointer; }
+        .suggestions-box div:hover { background: var(--primary-light); color: var(--primary-dark); }
+
+        /* Neighborhoods */
+        .neighborhood-section { margin-bottom: 1.5rem; animation: fadeUp 0.5s ease; }
+        .neighborhood-title { font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .neighborhood-scroll { display: flex; gap: 1rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.5rem; }
+        .neighborhood-scroll::-webkit-scrollbar { display: none; }
+        .hood-card { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s; }
+        .hood-card:hover { transform: translateY(-3px); }
+        .hood-img { width: 70px; height: 70px; border-radius: 50%; background-size: cover; background-position: center; border: 2px solid white; box-shadow: var(--shadow-subtle); }
+        .hood-name { font-size: 0.75rem; font-weight: 600; color: var(--secondary); white-space: nowrap; }
+
+        /* Banners */
+        .trust-banner { display: flex; justify-content: space-between; background: white; padding: 1rem 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-subtle); border: 1px solid var(--border); margin-bottom: 1.5rem; overflow-x: auto; gap: 1.5rem; scrollbar-width: none; }
+        .trust-banner::-webkit-scrollbar { display: none; }
+        .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; color: var(--secondary); white-space: nowrap; }
+        .trust-item i { color: var(--accent); font-size: 1rem; }
+
+        .market-insight { background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%); border: 1px solid #c7d2fe; border-radius: var(--radius-md); padding: 0.8rem 1.2rem; display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; box-shadow: var(--shadow-subtle); }
+        .market-insight-icon { background: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .market-insight-text { font-size: 0.85rem; font-weight: 600; color: var(--secondary); }
+
+        /* Filters */
+        .filter-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; margin-bottom: 0.5rem; }
+        .filter-scroll::-webkit-scrollbar { display: none; }
+        .filter-chip { background: var(--bg-card); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-subtle); display: flex; align-items: center; gap: 6px; }
+        .filter-chip.active { background: var(--secondary); color: white; border-color: var(--secondary); }
+        .filter-chip i { opacity: 0.8; }
+
+        .meta-header { display: flex; justify-content: space-between; align-items: center; margin: 1rem 0; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .sort-btn { background: transparent; border: none; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+        /* Property Grid */
+        .property-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .property-card { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-subtle); border: 1px solid var(--border); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: 0; animation: fadeUp 0.5s ease forwards; position: relative; }
+        .property-card:hover { box-shadow: var(--shadow-float); transform: translateY(-4px); }
+        .property-card.assured { border: 1px solid rgba(245, 158, 11, 0.4); box-shadow: var(--shadow-glow); }
+
+        .prop-image-wrapper { position: relative; width: 100%; height: 240px; background: #e2e8f0; }
+        .prop-image-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; height: 100%; width: 100%; }
+        .prop-image-scroll::-webkit-scrollbar { display: none; }
+        .prop-image-slide { flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: center; }
+        .prop-image-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        .prop-badge { position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.95); color: var(--secondary); font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 100px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 4px; z-index: 10; }
+        .prop-badge.assured { background: var(--secondary); color: var(--gold); }
+        .prop-badge.verified i { color: var(--accent); }
+
+        .fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.95); border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; transition: all 0.2s; }
+        .fav-btn.active { color: #ef4444; animation: pop 0.3s ease; }
+
+        .carousel-dots { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 10; }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: white; width: 14px; border-radius: 10px; }
+
+        .prop-details { padding: 1.2rem; }
+        .prop-price-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; }
+        .prop-price { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.02em; }
+        .prop-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .prop-type { font-size: 0.8rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 4px 10px; border-radius: 8px; }
+
+        .prop-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.3rem; line-height: 1.3; }
+        .prop-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; }
+
+        .prop-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; }
+        .spec-pill { background: var(--bg-main); color: var(--secondary); font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.03); }
+        .spec-pill i { opacity: 0.6; font-size: 0.9rem; }
+
+        .view-btn { display: block; width: 100%; background: var(--bg-main); color: var(--secondary); text-align: center; padding: 0.8rem; border-radius: var(--radius-md); font-size: 0.95rem; font-weight: 600; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+        .view-btn:hover { background: var(--secondary); color: white; }
+        .property-card.assured .view-btn { background: var(--secondary); color: white; border: none; }
+        .property-card.assured .view-btn:hover { background: var(--primary); }
+
+        /* Floating Maps & Bottom Nav */
+        .floating-map-btn { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--secondary); color: white; padding: 0.8rem 1.5rem; border-radius: 100px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3); border: none; cursor: pointer; z-index: 1000; transition: all 0.3s; }
+        .floating-map-btn:active { transform: translateX(-50%) scale(0.95); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 0.8rem 0; padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.03); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 600; width: 60px; }
+        .nav-item i { font-size: 1.4rem; transition: 0.2s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-2px); }
+
+        /* MODALS (Property Details & Booking) */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        
+        .modal-content { background: white; border-radius: 24px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: transform 0.3s ease; position: relative; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-header { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); z-index: 10; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+        .close-btn:hover { color: var(--secondary); }
+
+        /* Detailed View Specifics */
+        .detail-hero-img { width: 100%; height: 300px; background-size: cover; background-position: center; position: relative; }
+        .detail-body { padding: 20px; }
+        .detail-title { font-size: 1.4rem; font-weight: 800; color: var(--secondary); margin-bottom: 5px; line-height: 1.3; }
+        .detail-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+        .detail-price span { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+        .detail-section-title { font-size: 1rem; font-weight: 700; color: var(--secondary); margin: 20px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        .detail-description { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
+        
+        .action-bar { padding: 20px; border-top: 1px solid var(--border); background: var(--bg-main); display: flex; gap: 15px; }
+        .btn-primary { flex: 1; background: var(--secondary); color: white; text-align: center; padding: 12px; border-radius: 100px; font-weight: 700; font-size: 1rem; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-primary:hover { background: var(--primary); }
+
+        /* Form styling */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--secondary); margin-bottom: 6px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; font-size: 0.95rem; outline: none; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 12px 24px; border-radius: 100px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); z-index: 3000; transition: bottom 0.4s ease; display: flex; align-items: center; gap: 10px; }
+        .toast.show { bottom: 100px; }
+
+        /* Loader */
+        .loading-skeleton { background: #e2e8f0; border-radius: var(--radius-lg); animation: skeletonPulse 1.5s infinite ease-in-out; height: 350px; }
+        @keyframes skeletonPulse { 0% { opacity: 0.6; } 50% { opacity: 0.3; } 100% { opacity: 0.6; } }
+
+        @media (max-width: 900px) { .nav-links { display: none; } }
+        @media (min-width: 768px) {
+            .bottom-nav, .floating-map-btn { display: none; }
+            body { padding-bottom: 2rem; }
+            .property-grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+            .search-wrapper { max-width: 800px; margin: 0 auto 1.5rem; }
+            .toast.show { bottom: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div style="display: flex; align-items: center;">
+                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <a href="index.html" class="brand-wrapper">
+                    <span class="brand">zenzy<span class="brand-dot"></span></span>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">HOME</a>
+                <a href="#" class="active">RENTALS</a>
+                <a href="#">SERVICES</a>
+                <a href="#">CONTACT</a>
+            </nav>
+            <div class="user-actions">
+                <span class="icon-btn"><i class="fas fa-search"></i></span>
+                <span class="icon-btn"><i class="fas fa-user-circle"></i></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search 'PG', 'Family', 'Studio'..." autocomplete="off">
+            <button class="locate-btn" id="locationBtn"><i class="fas fa-location-crosshairs"></i> <span id="locText">Locate</span></button>
+            <div id="suggestions" class="suggestions-box"></div>
+        </div>
+
+        <div class="neighborhood-section">
+            <div class="neighborhood-title">Explore Top Blocks <a href="#" style="font-size:0.8rem; color:var(--primary); text-decoration:none; font-weight:600;">View All</a></div>
+            <div class="neighborhood-scroll">
+                <div class="hood-card"><div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=200&q=80');"></div><span class="hood-name">Pratap nagar </span></div>
+                <div class="hood-card"><div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80');"></div><span class="hood-name">Gopal hura </span></div>
+                <div class="hood-card"><div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=200&q=80');"></div><span class="hood-name">Mansarover</span></div>
+                <div class="hood-card"><div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=200&q=80');"></div><span class="hood-name">Malvinagar</span></div>
+                <div class="hood-card"><div class="hood-img" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=200&q=80');"></div><span class="hood-name">Chor bazar </span></div>
+            </div>
+        </div>
+
+        <div class="trust-banner">
+            <div class="trust-item"><i class="fas fa-shield-alt"></i> 100% Verified Owners</div>
+            <div class="trust-item"><i class="fas fa-bolt"></i> Zero Brokerage Access</div>
+            <div class="trust-item"><i class="fas fa-key"></i> Instant Move-in Ready</div>
+        </div>
+
+        <div class="filter-scroll" id="filterScroll">
+            <div class="filter-chip active" data-filter="all">All Homes</div>
+            <div class="filter-chip" data-filter="family"><i class="fas fa-users"></i> Family</div>
+            <div class="filter-chip" data-filter="bachelors"><i class="fas fa-user-friends"></i> Bachelors</div>
+            <div class="filter-chip" data-filter="girls"><i class="fas fa-female"></i> Girls Only</div>
+            <div class="filter-chip" data-filter="student"><i class="fas fa-book-reader"></i> Student</div>
+            <div class="filter-chip" data-filter="pg"><i class="fas fa-bed"></i> PG</div>
+            <div class="filter-chip" data-filter="assured"><i class="fas fa-crown" style="color:var(--gold)"></i> Zenzy Assured</div>
+        </div>
+
+        <div class="meta-header" id="resultsMeta">
+            <span id="resultCount">Connecting to Protocol Database...</span>
+            <button class="sort-btn"><i class="fas fa-sort-amount-down"></i> Sort</button>
+        </div>
+
+        <!-- Property Grid -->
+        <div class="property-grid" id="propertyGrid">
+            <div class="loading-skeleton"></div>
+            <div class="loading-skeleton"></div>
+        </div>
+    </main>
+
+    <button class="floating-map-btn"><span>Map View</span> <i class="fas fa-map"></i></button>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item"><i class="fas fa-compass"></i><span>Explore</span></a>
+        <a href="#" class="nav-item active"><i class="fas fa-house-chimney"></i><span>Rent</span></a>
+        <a href="#" class="nav-item"><i class="far fa-heart"></i><span>Saved</span></a>
+        <a href="#" class="nav-item"><i class="far fa-user-circle"></i><span>Profile</span></a>
+    </nav>
+
+    <!-- ================= MODALS ================= -->
+    
+    <!-- 1. Property Details Modal -->
+    <div class="modal-overlay" id="propertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="font-bold text-lg text-secondary">Property Details</h3>
+                <button class="close-btn" onclick="closePropertyModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <!-- Dynamic Image injected via JS -->
+            <div id="modalHeroImage" class="detail-hero-img"></div>
+            
+            <div class="detail-body">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="detail-title" id="modalTitle">Property Title</h2>
+                        <p class="text-sm text-muted mb-2"><i class="fas fa-map-marker-alt text-primary"></i> <span id="modalLocation">Location</span></p>
+                    </div>
+                    <span id="modalBadge" class="bg-primary-light text-primary px-3 py-1 rounded-full text-xs font-bold shrink-0">Type</span>
+                </div>
+                
+                <div class="detail-price" id="modalPrice">₹0 <span>/mo</span></div>
+                
+                <!-- Specs -->
+                <div class="prop-specs" id="modalSpecs"></div>
+
+                <div class="detail-section-title">About this Property</div>
+                <div class="detail-description" id="modalDescription">Detailed description goes here...</div>
+            </div>
+
+            <div class="action-bar">
+                <button class="icon-btn" style="flex-shrink:0;"><i class="far fa-heart"></i></button>
+                <button class="btn-primary" onclick="openBookingModal()">Inquire / Book Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Booking / Inquiry Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 class="font-bold text-lg text-secondary">Schedule a Visit</h3>
+                <button class="close-btn" onclick="closeBookingModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-5">
+                <p class="text-sm text-muted mb-4">Requesting details for: <strong class="text-secondary" id="bookingTargetName">Property Name</strong></p>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="custName" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="custPhone" required placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                        <label>Message / Visit Preference</label>
+                        <textarea id="custMsg" rows="3" placeholder="I would like to visit this property tomorrow morning..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Send Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Inquiry sent!</span></div>
+
+    <!-- Firebase Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGmSHiSFvlOIk5woSsbBLI5rndASromyg",
+            authDomain: "dmin-dbe58.firebaseapp.com",
+            projectId: "dmin-dbe58",
+            storageBucket: "dmin-dbe58.firebasestorage.app",
+            messagingSenderId: "369190320724",
+            appId: "1:369190320724:web:29a949f473c557d63d4bc1",
+            measurementId: "G-ZE2EEQC2WM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'zenzy_main_app';
+        const getCol = (name) => collection(db, 'artifacts', appId, 'public', 'data', name);
+
+        let properties = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let selectedPropertyId = null;
+
+        const grid = document.getElementById('propertyGrid');
+
+        const initApp = async () => {
+            try { await signInAnonymously(auth); } catch (error) { console.error("Auth error"); }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                await seedDatabaseIfEmpty();
+                setupRealtimeListener();
+            }
+        });
+        initApp();
+
+        // Updated Seed with descriptions
+        const seedDatabaseIfEmpty = async () => {
+            const ref = getCol('zenzy_rentals');
+            const snap = await getDocs(ref);
+            if(snap.empty) {
+                const defaultRentals = [
+                    { title:"Independent Floor with Balcony", price:18500, type:"2 BHK", location:"Block 4, Metro Sector", beds:2, baths:2, sqft:950, verified:true, assured:true, brokerage:false, tags:["metro", "independent", "family", "bachelors"], description:"Beautiful newly painted independent floor right near the metro station. Includes a large balcony, modular kitchen, and dedicated parking space. Perfect for a family or working professionals.", images:["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80"] },
+                    { title:"Cozy Studio Apartment", price:12000, type:"1 BHK", location:"Block 2, Residency Greens", beds:1, baths:1, sqft:450, verified:false, assured:false, brokerage:true, tags:["studio", "student", "bachelors"], description:"Compact, easy to maintain studio apartment. Semi-furnished with AC and wardrobe. 24/7 water supply and security.", images:["https://images.unsplash.com/photo-1502672260266-1c1e52409818?auto=format&fit=crop&w=600&q=80"] },
+                    { title:"Luxury Villa with Garden", price:45000, type:"3 BHK", location:"Zone A, Protocol Estates", beds:3, baths:3, sqft:2100, verified:true, assured:true, brokerage:false, tags:["premium","villa", "family"], description:"Experience premium living. This stunning villa features a private garden, ultra-modern fittings, Italian marble flooring, and access to a clubhouse.", images:["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80"] },
+                    { title:"Spacious 3 BHK for Family", price:32000, type:"3 BHK", location:"Block 9, Green Park", beds:3, baths:3, sqft:1800, verified:true, assured:true, brokerage:true, tags:["family", "premium"], description:"Very spacious corner flat with excellent ventilation. Park facing with 3 large bedrooms and attached washrooms.", images:["https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=600&q=80"] },
+                    { title:"Safe & Secure Girls PG", price:6500, type:"PG", location:"Block 5, Near University", beds:1, baths:1, sqft:0, verified:true, assured:true, brokerage:false, tags:["pg", "girls", "student", "furnished"], description:"Highly secure Girls PG with strict protocol. Includes 3 meals a day, high-speed Wi-Fi, laundry service, and biometric entry.", images:["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80"] }
+                ];
+                for (const p of defaultRentals) await addDoc(ref, p);
+            }
+        };
+
+        const setupRealtimeListener = () => {
+            onSnapshot(getCol('zenzy_rentals'), (snapshot) => {
+                properties = [];
+                snapshot.forEach(doc => properties.push({ id: doc.id, ...doc.data() }));
+                triggerRender();
+            });
+        };
+
+        // Fuzzy Search Helper
+        function getEditDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1)
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        // UI Interactions
+        function filterProperties() {
+            return properties.filter(p => {
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'assured' && !p.assured) return false;
+                    if (currentFilter === 'brokerage' && !p.brokerage) return false;
+                    if (['family', 'bachelors', 'girls', 'student', 'pg'].includes(currentFilter)) {
+                        if (!p.tags || !p.tags.includes(currentFilter)) return false;
+                    }
+                }
+                if (searchTerm) {
+                    const term = searchTerm.toLowerCase().trim();
+                    const fullText = (p.title + " " + p.location + " " + (p.tags||[]).join(" ") + " " + p.type).toLowerCase();
+                    
+                    if (fullText.includes(term)) return true;
+                    
+                    if (term.length >= 4) {
+                        const isFuzzyMatch = (p.tags || []).some(tag => getEditDistance(term, tag) <= 2) || 
+                                             getEditDistance(term, p.type.toLowerCase()) <= 2;
+                        return isFuzzyMatch;
+                    }
+                    return false;
+                }
+                return true;
+            });
+        }
+
+        function triggerRender() { grid.innerHTML = ''; setTimeout(render, 50); }
+
+        function render() {
+            const filtered = filterProperties();
+            document.getElementById('resultCount').innerHTML = `<strong>${filtered.length} homes</strong> found in your protocol`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);"><i class="fas fa-search-minus" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i><p>No properties match your filters or search.</p></div>`;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach((p, idx) => {
+                const assuredClass = p.assured ? 'assured' : '';
+                let badge = p.assured ? `<div class="prop-badge assured"><i class="fas fa-crown"></i> Zenzy Assured</div>` 
+                          : (p.verified ? `<div class="prop-badge verified"><i class="fas fa-check-circle"></i> Verified</div>` 
+                          : (p.brokerage ? `<div class="prop-badge" style="color:var(--accent);">No Brokerage</div>` : ''));
+
+                let slides = '', dots = '';
+                if (p.images && p.images.length > 0) {
+                    p.images.forEach((img, i) => {
+                        slides += `<div class="prop-image-slide"><img src="${img}" alt="Property" loading="lazy"></div>`;
+                        dots += `<div class="dot ${i===0?'active':''}"></div>`;
+                    });
+                } else {
+                    slides = `<div class="prop-image-slide"><div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f1f5f9;"><i class="fas fa-image fa-3x text-slate-300"></i></div></div>`;
+                }
+
+                html += `
+                <article class="property-card ${assuredClass}" style="animation-delay: ${idx * 0.1}s">
+                    <div class="prop-image-wrapper">
+                        ${badge}
+                        <button class="fav-btn"><i class="far fa-heart"></i></button>
+                        <div class="prop-image-scroll" id="scroll-${p.id}">${slides}</div>
+                        <div class="carousel-dots" id="dots-${p.id}">${dots}</div>
+                    </div>
+                    <div class="prop-details">
+                        <div class="prop-price-row">
+                            <div class="prop-price">₹${(p.price || 0).toLocaleString()} <span>/mo</span></div>
+                            <div class="prop-type">${p.type}</div>
+                        </div>
+                        <h3 class="prop-title">${p.title}</h3>
+                        <div class="prop-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
+                        
+                        <div class="prop-specs">
+                            <div class="spec-pill"><i class="fas fa-bed"></i> ${p.beds} Beds</div>
+                            <div class="spec-pill"><i class="fas fa-bath"></i> ${p.baths} Baths</div>
+                        </div>
+
+                        <button onclick="window.viewProperty('${p.id}')" class="view-btn">${p.assured ? 'View Assured Property' : 'View Details'}</button>
+                    </div>
+                </article>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        // Modal Logistics (Attached to window for inline onclick access)
+        window.viewProperty = (id) => {
+            const p = properties.find(x => x.id === id);
+            if(!p) return;
+            selectedPropertyId = p.id;
+            
+            // Populate Details Modal
+            const bgImage = (p.images && p.images.length > 0) ? p.images[0] : '';
+            document.getElementById('modalHeroImage').style.backgroundImage = `url('${bgImage}')`;
+            
+            document.getElementById('modalTitle').innerText = p.title;
+            document.getElementById('modalLocation').innerText = p.location;
+            document.getElementById('modalBadge').innerText = p.type;
+            document.getElementById('modalPrice').innerHTML = `₹${(p.price || 0).toLocaleString()} <span>/mo</span>`;
+            document.getElementById('modalDescription').innerText = p.description || 'No detailed description provided by the owner yet.';
+            
+            let specs = `<div class="spec-pill"><i class="fas fa-bed"></i> ${p.beds} Beds</div>
+                         <div class="spec-pill"><i class="fas fa-bath"></i> ${p.baths} Baths</div>`;
+            if(p.sqft) specs += `<div class="spec-pill"><i class="fas fa-vector-square"></i> ${p.sqft} sqft</div>`;
+            if(p.brokerage) specs += `<div class="spec-pill text-amber-600 border-amber-200 bg-amber-50"><i class="fas fa-bolt"></i> No Brokerage</div>`;
+            document.getElementById('modalSpecs').innerHTML = specs;
+
+            document.getElementById('propertyModal').classList.add('active');
+        };
+
+        window.closePropertyModal = () => { document.getElementById('propertyModal').classList.remove('active'); };
+
+        window.openBookingModal = () => {
+            const p = properties.find(x => x.id === selectedPropertyId);
+            document.getElementById('bookingTargetName').innerText = p.title;
+            closePropertyModal();
+            setTimeout(() => document.getElementById('bookingModal').classList.add('active'), 300);
+        };
+
+        window.closeBookingModal = () => { document.getElementById('bookingModal').classList.remove('active'); };
+
+        // Handle Booking Submission
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const ogText = btn.innerText; btn.innerText = "Sending..."; btn.disabled = true;
+
+            const p = properties.find(x => x.id === selectedPropertyId);
+            const reqData = {
+                source: "House Rent Page",
+                propertyName: p.title,
+                propertyId: p.id,
+                customerName: document.getElementById('custName').value,
+                customerPhone: document.getElementById('custPhone').value,
+                customerAddress: document.getElementById('custMsg').value, // Used as message
+                status: "Pending",
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                await addDoc(getCol('zenzy_booking_requests'), reqData);
+                closeBookingModal();
+                document.getElementById('bookingForm').reset();
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            } catch(e) { alert("Error sending inquiry."); }
+            finally { btn.innerText = ogText; btn.disabled = false; }
+        });
+
+        // Filter chips setup
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.onclick = function() {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                triggerRender();
+            };
+        });
+
+        // Handle Smart Search & Suggestions
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.getElementById('suggestions');
+        
+        searchInput.oninput = (e) => {
+            searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (searchTerm.length > 2) {
+                const keywords = ["metro", "studio", "premium", "villa", "furnished", "family", "bachelors", "girls", "student", "pg"];
+                let matches = [];
+
+                keywords.forEach(kw => {
+                    if (kw.includes(searchTerm)) {
+                        matches.push({ word: kw, exact: true });
+                    } else {
+                        let distance = getEditDistance(searchTerm, kw);
+                        if (distance <= 2 && searchTerm.length >= 3) {
+                            matches.push({ word: kw, exact: false });
+                        }
+                    }
+                });
+
+                if (matches.length > 0) {
+                    suggestionsBox.innerHTML = matches.slice(0, 4).map(m => 
+                        `<div>
+                            <i class="fas ${m.exact ? 'fa-search' : 'fa-magic'}"></i> 
+                            ${m.word} 
+                            ${!m.exact ? '<span style="margin-left:auto; font-size:0.7rem; color:var(--text-muted); background:var(--bg-main); padding:2px 6px; border-radius:4px;">Did you mean?</span>' : ''}
+                        </div>`
+                    ).join('');
+                    suggestionsBox.style.display = 'block';
+                } else {
+                    suggestionsBox.style.display = 'none';
+                }
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+
+            clearTimeout(window.sTimeout);
+            window.sTimeout = setTimeout(triggerRender, 300);
+        };
+
+        suggestionsBox.onclick = (e) => {
+            const targetDiv = e.target.closest('div');
+            if(targetDiv) {
+                const clone = targetDiv.cloneNode(true);
+                const span = clone.querySelector('span');
+                if(span) span.remove();
+                
+                const text = clone.innerText.trim();
+                searchInput.value = text;
+                searchTerm = text;
+                suggestionsBox.style.display = 'none';
+                triggerRender();
+            }
+        };
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>
